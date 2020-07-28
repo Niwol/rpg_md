@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall
+CFLAGS = -Wall -std=c++11 -I ./src
 LDFLAGS = -lSDL2 -lSDL2_image
 
 ifeq ($(DEBUG), yes)
@@ -8,18 +8,27 @@ else
 	CFLAGS += -O3
 endif
 
-EXEC = bin/main
+EXEC = build/main
 SRC = $(wildcard src/*.cpp)
-OBJ = $(subst src,obj, $(SRC:.cpp=.o))
+OBJ = $(SRC:.cpp=.o)
 
-obj/%.o: src/%.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+build/%.o: build src/%.cpp
+	@ echo "[building object files]"
+	@ $(CC) $(CFLAGS) -c $< -o $@
+	@ echo "[done]"
 
 $(EXEC): $(OBJ)
+	@ echo "[building executable]"
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+	@ echo "[done]"
+
+build:
+	@ echo "[creating build dir]"
+	@ mkdir -p build/
+	@ echo "[done]"
 
 clean:
-	rm obj/*
+	rm -f build/*.o
 
 mrproper: clean
-	rm bin/*
+	rm -f $(EXEC)
