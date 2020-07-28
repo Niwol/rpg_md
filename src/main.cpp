@@ -3,9 +3,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include <character.h>
-#include <map.h>
-#include <texture.h>
+#include "character.h"
+#include "map.h"
+#include "texture.h"
 
 constexpr int SCREEN_W = 1900;
 constexpr int SCREEN_H = 1000;

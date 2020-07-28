@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -std=c++11 -I ./src
+CFLAGS = -Wall -std=c++11
 LDFLAGS = -lSDL2 -lSDL2_image
 
 ifeq ($(DEBUG), yes)
@@ -10,16 +10,18 @@ endif
 
 EXEC = build/main
 SRC = $(wildcard src/*.cpp)
-OBJ = $(SRC:.cpp=.o)
+OBJ = $(subst src,build,$(SRC:.cpp=.o))
 
-build/%.o: build src/%.cpp
-	@ echo "[building object files]"
+.PHONY: build
+
+build/%.o: src/%.cpp
+	@ echo "[building object file $@]"
 	@ $(CC) $(CFLAGS) -c $< -o $@
 	@ echo "[done]"
 
 $(EXEC): $(OBJ)
 	@ echo "[building executable]"
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+	@ $(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 	@ echo "[done]"
 
 build:
