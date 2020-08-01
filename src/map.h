@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <fstream>
-#include <ios>
 #include <SDL2/SDL.h>
 
 #include "texture.h"

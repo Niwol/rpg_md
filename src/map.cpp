@@ -120,8 +120,8 @@ void cMap::render(SDL_Renderer *renderer, int x, int y)
     for(int i = 0; i < m_nCells; i++)
     {
         SDL_Rect clip = { m_cells[i].tmCol* m_tileWidth,
-                            m_cells[i].tmRow * m_tileHeight, 
-                            m_tileWidth, m_tileHeight };
+                          m_cells[i].tmRow * m_tileHeight,
+                          m_tileWidth, m_tileHeight };
 
         m_tilemapTexture.render(renderer,
                                 x + (i * m_tileWidth) % (m_cols * m_tileWidth),

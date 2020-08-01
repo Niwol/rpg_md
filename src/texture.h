@@ -11,7 +11,7 @@ class cTexture
 {
     public:
 
-        // Contructor / destructor
+        // Constructor / destructor
         cTexture();
         ~cTexture();
         void free();

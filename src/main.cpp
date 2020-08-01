@@ -91,7 +91,7 @@ bool init(SDL_Window **w, SDL_Renderer **r) {
   *w = SDL_CreateWindow("RPG Test", SDL_WINDOWPOS_UNDEFINED,
                         SDL_WINDOWPOS_UNDEFINED, rect.w, rect.h,
                         SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN);
-  if (!*w) {
+  if (*w == NULL) {
     printf("Unable to create window! SDL_ERROR: %s\n", SDL_GetError());
     return false;
   }
