@@ -12,6 +12,11 @@ constexpr int SCREEN_H = 1000;
 
 bool init(SDL_Window** w, SDL_Renderer** r);
 
+/**
+ * @brief Test
+ * 
+ * @return int 
+ */
 int main()
 {
     SDL_Window* window = NULL;
