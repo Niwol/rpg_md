@@ -32,5 +32,8 @@ build:
 clean:
 	rm -f build/*.o
 
+doc: doxyfile
+	doxygen doxyfile
+
 mrproper: clean
 	rm -f $(EXEC)
