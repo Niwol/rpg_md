@@ -1,61 +1,56 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include <iostream>
-#include <fstream>
 #include <SDL2/SDL.h>
+#include <fstream>
+#include <iostream>
 
 #include "texture.h"
 
-struct sCell
-{
+struct sCell {
     bool solid;
 
     int tmCol;
     int tmRow;
 };
 
+class cMap {
+public:
+    cMap(int cols, int rows);
+    ~cMap();
 
-class cMap
-{
-    public:
+    bool loadTileMap(SDL_Window* window, SDL_Renderer* renderer, std::string path, int cols, int rows, bool alpha);
+    bool load(std::string path);
+    bool save(std::string path);
 
-        cMap(int cols, int rows);
-        ~cMap();
+    void render(SDL_Renderer* renderer, int x = 0, int y = 0);
+    void renderTilemap(SDL_Renderer* renderer, int x, int y);
 
-        bool loadTileMap(SDL_Window *window, SDL_Renderer *renderer, std::string path, int cols, int rows, bool alpha);
-        bool load(std::string path);
-        bool save(std::string path);
+    void handleEvent(SDL_Event& e);
 
-        void render(SDL_Renderer *renderer, int x = 0, int y = 0);
-        void renderTilemap(SDL_Renderer *renderer, int x, int y);
+private:
+    cTexture m_tilemapTexture;
 
-        void handleEvent(SDL_Event &e);
+    int m_tileWidth;
+    int m_tileHeight;
 
-    private:
+    int m_tilemapCols;
+    int m_tilemapRows;
 
-        cTexture m_tilemapTexture;
+    int m_cols;
+    int m_rows;
 
-        int m_tileWidth;
-        int m_tileHeight;
+    int m_nCells;
+    sCell* m_cells;
 
-        int m_tilemapCols;
-        int m_tilemapRows;
+    int m_selectedTile;
 
-        int m_cols;
-        int m_rows;
+    int m_mouseX;
+    int m_mouseY;
+    bool m_mouseButton1Hold;
 
-        int m_nCells;
-        sCell *m_cells;
-
-        int m_selectedTile;
-
-        int m_mouseX;
-        int m_mouseY;
-        bool m_mouseButton1Hold;
-
-        int m_posX;
-        int m_posY;
+    int m_posX;
+    int m_posY;
 };
 
 #endif

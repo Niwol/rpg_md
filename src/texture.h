@@ -6,41 +6,36 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+class cTexture {
+public:
+    // Constructor / destructor
+    cTexture();
+    ~cTexture();
+    void free();
 
-class cTexture
-{
-    public:
+    // Methods
+    bool loadFromFile(SDL_Window* window, SDL_Renderer* renderer, std::string path, bool alpha = false);
+    void render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip = NULL);
 
-        // Constructor / destructor
-        cTexture();
-        ~cTexture();
-        void free();
+    bool lockTexture();
+    bool unlockTexture();
 
-        // Methods
-        bool loadFromFile(SDL_Window *window, SDL_Renderer *renderer, std::string path, bool alpha = false);
-        void render(SDL_Renderer *renderer, int x, int y, SDL_Rect *clip = NULL);
+    // Accessors
+    int get_width();
+    int get_height();
 
-        bool lockTexture();
-        bool unlockTexture();
+    void* get_Pixels();
+    int get_Pitch();
 
-        // Accessors
-        int get_width();
-        int get_height();
+private:
+    // The texture
+    SDL_Texture* m_texture;
+    void* m_pixels;
+    int m_pitch;
 
-        void *get_Pixels();
-        int get_Pitch();
-
-    private:
-
-        // The texture
-        SDL_Texture *m_texture;
-        void *m_pixels;
-        int m_pitch;
-
-        // Dimensins
-        int m_width;
-        int m_height;
+    // Dimensins
+    int m_width;
+    int m_height;
 };
-
 
 #endif
