@@ -28,7 +28,7 @@ BraceWrapping:
   AfterCaseLabel:  false
   AfterClass:      false
   AfterControlStatement: false
-  AfterEnum:       false
+  AfterEnum:       true
   AfterFunction:   true
   AfterNamespace:  false
   AfterObjCDeclaration: false

@@ -6,14 +6,18 @@
 
 #include "texture.h"
 
-enum stats { IDLE,
-    WALKING };
+enum stats {
+    IDLE,
+    WALKING
+};
 
-enum faceDirection { NO_DIRECTION = 0,
+enum faceDirection {
+    NO_DIRECTION = 0,
     UP = 1,
     DOWN = 2,
     LEFT = 3,
-    RIGHT = 4 };
+    RIGHT = 4
+};
 
 class cCharacter {
 public:
