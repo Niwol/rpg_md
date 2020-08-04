@@ -1,4 +1,4 @@
-#include "character.h"
+#include "character.hpp"
 
 cCharacter::cCharacter(SDL_Window* window, SDL_Renderer* renderer)
 {

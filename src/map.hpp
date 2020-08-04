@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "texture.h"
+#include "texture.hpp"
 
 struct sCell {
     bool solid;

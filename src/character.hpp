@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
-#include "texture.h"
+#include "texture.hpp"
 
 enum stats {
     IDLE,

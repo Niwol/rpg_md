@@ -1,4 +1,4 @@
-#include "map.h"
+#include "map.hpp"
 
 cMap::cMap(int cols, int rows)
 {
