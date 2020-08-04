@@ -35,6 +35,9 @@ int main()
             "files/assets/tilemaps/tilemap_nature.png", 10, 20, true);
         map.load("files/maps/test.map");
 
+        cTexture t;
+        t.loadFromFile(window, renderer, "files/assets/characters/set.png");
+
         while (!quit) {
             // Events
             while (SDL_PollEvent(&e)) {
@@ -61,6 +64,8 @@ int main()
 
             map.render(renderer, 550, 80);
             map.renderTilemap(renderer, 10, 20);
+
+            t.render(renderer, 100, 200);
 
             SDL_RenderPresent(renderer);
         }
