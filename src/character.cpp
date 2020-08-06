@@ -14,7 +14,7 @@ cCharacter::cCharacter(SDL_Window* window, SDL_Renderer* renderer)
     for (int i = 0; i < 5; i++)
         m_keyHeld[i] = false;
 
-    m_mainSpriteSheet.loadFromFile(window, renderer, "spriteSheet.png", true);
+    m_mainSpriteSheet.loadFromFile(window, renderer, "files/assets/characters/spriteSheet.png", true);
 }
 
 cCharacter::~cCharacter()

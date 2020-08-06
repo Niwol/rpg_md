@@ -35,6 +35,8 @@ int main()
             "files/assets/tilemaps/tilemap_nature.png", 10, 20, true);
         map.load("files/maps/test.map");
 
+        cCharacter c(window, renderer);
+
         cTexture t;
         t.loadFromFile(window, renderer, "files/assets/characters/set.png");
 
@@ -55,8 +57,11 @@ int main()
                 if (e.type == SDL_MOUSEBUTTONDOWN) {
                 }
 
+                c.handleEvent(e);
                 map.handleEvent(e);
             }
+
+            c.move();
 
             // Rendering
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -65,9 +70,13 @@ int main()
             map.render(renderer, 550, 80);
             map.renderTilemap(renderer, 10, 20);
 
+            c.render(renderer);
+
             t.render(renderer, 100, 200);
 
             SDL_RenderPresent(renderer);
+
+            c.nextFrame();
         }
 
         map.save("files/maps/test.map");
