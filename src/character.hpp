@@ -24,8 +24,8 @@ public:
     /**
      * @brief Construct a new c Character object
      * 
-     * @param window The window in witch the character will be rendert
-     * @param renderer The renderer witch renders the character
+     * @param window The window in which the character will be rendert
+     * @param renderer The renderer which renders the character
      */
     cCharacter(SDL_Window* window, SDL_Renderer* renderer);
 
@@ -38,7 +38,7 @@ public:
     /**
      * @brief Renders the character on its current xy position and with the apropriated sprite
      * 
-     * @param renderer The renderer witch renders the character
+     * @param renderer The renderer which renders the character
      */
     void render(SDL_Renderer* renderer);
 
