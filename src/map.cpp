@@ -110,8 +110,7 @@ void cMap::render(SDL_Renderer* renderer, int x, int y)
             m_cells[i].tmRow * m_tileHeight,
             m_tileWidth, m_tileHeight };
 
-        m_tilemapTexture.render(renderer,
-            x + (i * m_tileWidth) % (m_cols * m_tileWidth),
+        m_tilemapTexture.render(x + (i * m_tileWidth) % (m_cols * m_tileWidth),
             y + (i / m_cols) * m_tileHeight,
             &clip);
     }
@@ -124,7 +123,7 @@ void cMap::render(SDL_Renderer* renderer, int x, int y)
 
 void cMap::renderTilemap(SDL_Renderer* renderer, int x, int y)
 {
-    m_tilemapTexture.render(renderer, x, y);
+    m_tilemapTexture.render(x, y);
 
     SDL_Rect rect = { x + (m_selectedTile * m_tileWidth) % m_tilemapTexture.get_width() - 1,
         y + (m_selectedTile / m_tilemapCols) * m_tileHeight - 1,

@@ -75,10 +75,12 @@ bool cTexture::loadFromFile(SDL_Window* window, SDL_Renderer* renderer, std::str
     SDL_FreeSurface(loadedSurface);
     SDL_FreeSurface(formatedSurface);
 
+    m_renderer = renderer;
+
     return true;
 }
 
-void cTexture::render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip)
+void cTexture::render(int x, int y, SDL_Rect* clip)
 {
     SDL_Rect renderQuad = { x, y, m_width, m_height };
 
@@ -87,7 +89,7 @@ void cTexture::render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip)
         renderQuad.h = clip->h;
     }
 
-    SDL_RenderCopy(renderer, m_texture, clip, &renderQuad);
+    SDL_RenderCopy(m_renderer, m_texture, clip, &renderQuad);
 }
 
 bool cTexture::lockTexture()

@@ -43,12 +43,11 @@ public:
     /**
      * @brief Renders the texture to the screen
      * 
-     * @param renderer The renderer which renders the texture
      * @param x The x position to render the texture to
      * @param y The y position to render the texture to
      * @param clip Facultative: a SDL_Rect which determines the part of the texture to render
      */
-    void render(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip = NULL);
+    void render(int x, int y, SDL_Rect* clip = NULL);
 
     /**
      * @brief Locks the texture to acces its pixels
@@ -104,6 +103,8 @@ private:
     // Dimensins
     int m_width;
     int m_height;
+
+    SDL_Renderer* m_renderer;
 };
 
 #endif

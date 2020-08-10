@@ -65,7 +65,7 @@ public:
     /**
      * @brief Renders the map to the screen. Needs to have a tilemap texture loaded
      * 
-     * @param renderer The renderer which renders the map
+     * @param renderer The renderer which renders the border map
      * @param x The x coordonate to render the map to
      * @param y The y coordonate to render the map to
      */
@@ -74,7 +74,7 @@ public:
     /**
      * @brief Renders the hole tilemap texture to the screen. Useful for creating maps and debugging
      * 
-     * @param renderer The renderer which renders the tilemap texture
+     * @param renderer The renderer which renders the selected tile border on the tilemap
      * @param x The x coordonate to render the tilemap texture to
      * @param y The y coordonate to render the tilemap texture to
      */

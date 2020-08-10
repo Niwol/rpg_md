@@ -21,6 +21,13 @@ public:
      */
     ~cGameObject();
 
+    /**
+     * @brief Get the name of the object
+     * 
+     * @return std::string: the name of the object
+     */
+    std::string get_name();
+
 private:
     std::string m_name;
 };

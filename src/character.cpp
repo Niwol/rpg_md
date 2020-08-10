@@ -1,6 +1,6 @@
 #include "character.hpp"
 
-cCharacter::cCharacter(SDL_Window* window, SDL_Renderer* renderer)
+cCharacter::cCharacter()
 {
     m_x = 320;
     m_y = 90;
@@ -13,8 +13,6 @@ cCharacter::cCharacter(SDL_Window* window, SDL_Renderer* renderer)
 
     for (int i = 0; i < 5; i++)
         m_keyHeld[i] = false;
-
-    m_mainSpriteSheet.loadFromFile(window, renderer, "files/assets/characters/spriteSheet.png", true);
 }
 
 cCharacter::~cCharacter()
@@ -22,7 +20,12 @@ cCharacter::~cCharacter()
     m_mainSpriteSheet.free();
 }
 
-void cCharacter::render(SDL_Renderer* renderer)
+bool cCharacter::loadSpriteSheet(SDL_Window* window, SDL_Renderer* renderer, std::string path)
+{
+    return m_mainSpriteSheet.loadFromFile(window, renderer, path, true);
+}
+
+void cCharacter::render()
 {
     SDL_Rect renderQuad = { 0, 0, m_mainSpriteSheet.get_width() / 4, m_mainSpriteSheet.get_height() / 4 };
 
@@ -58,7 +61,7 @@ void cCharacter::render(SDL_Renderer* renderer)
         }
     }
 
-    m_mainSpriteSheet.render(renderer, m_x, m_y, &renderQuad);
+    m_mainSpriteSheet.render(m_x, m_y, &renderQuad);
 }
 
 void cCharacter::handleEvent(SDL_Event& e)

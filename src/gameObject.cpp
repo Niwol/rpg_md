@@ -8,3 +8,5 @@ cGameObject::cGameObject(std::string name)
 cGameObject::~cGameObject()
 {
 }
+
+std::string cGameObject::get_name() { return m_name; }

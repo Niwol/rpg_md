@@ -35,7 +35,8 @@ int main()
             "files/assets/tilemaps/tilemap_nature.png", 10, 20, true);
         map.load("files/maps/test.map");
 
-        cCharacter c(window, renderer);
+        cCharacter c;
+        c.loadSpriteSheet(window, renderer, "files/assets/characters/player.png");
 
         cTexture t;
         t.loadFromFile(window, renderer, "files/assets/characters/set.png");
@@ -70,9 +71,9 @@ int main()
             map.render(renderer, 550, 80);
             map.renderTilemap(renderer, 10, 20);
 
-            c.render(renderer);
+            c.render();
 
-            t.render(renderer, 100, 200);
+            t.render(100, 200);
 
             SDL_RenderPresent(renderer);
 

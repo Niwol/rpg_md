@@ -24,10 +24,8 @@ public:
     /**
      * @brief Construct a new c Character object
      * 
-     * @param window The window in which the character will be rendert
-     * @param renderer The renderer which renders the character
      */
-    cCharacter(SDL_Window* window, SDL_Renderer* renderer);
+    cCharacter();
 
     /**
      * @brief Destroy the c Character object
@@ -36,11 +34,21 @@ public:
     ~cCharacter();
 
     /**
+     * @brief Loads the characters sprite sheet
+     * 
+     * @param window The window in which the character will be rendert
+     * @param renderer The renderer which renders the character
+     * @param path The path to the sprite sheet
+     * @return true in succes
+     * @return false in faliure
+     */
+    bool loadSpriteSheet(SDL_Window* window, SDL_Renderer* renderer, std::string path);
+
+    /**
      * @brief Renders the character on its current xy position and with the apropriated sprite
      * 
-     * @param renderer The renderer which renders the character
      */
-    void render(SDL_Renderer* renderer);
+    void render();
 
     /**
      * @brief Handels the event from the user input
