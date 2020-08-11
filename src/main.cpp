@@ -4,6 +4,8 @@
 #include <SDL2/SDL_image.h>
 
 #include "character.hpp"
+#include "dynamic.hpp"
+#include "gameObject.hpp"
 #include "map.hpp"
 #include "texture.hpp"
 
@@ -41,6 +43,16 @@ int main()
         cTexture t;
         t.loadFromFile(window, renderer, "files/assets/characters/set.png");
 
+        cGameObject o("Test");
+        cDynamic d1(2, 3);
+        cDynamic d2(5, 9);
+
+        d1.loadSpriteSheet(window, renderer, "files/assets/characters/player.png");
+        d2.loadSpriteSheet(window, renderer, "files/assets/characters/enemy.png");
+
+        std::cout << "o = " << o.get_name() << std::endl;
+        std::cout << "d = " << d1.get_name() << std::endl;
+
         while (!quit) {
             // Events
             while (SDL_PollEvent(&e)) {
@@ -74,6 +86,9 @@ int main()
             c.render();
 
             t.render(100, 200);
+
+            d1.render(renderer, map);
+            d2.render(renderer, map);
 
             SDL_RenderPresent(renderer);
 

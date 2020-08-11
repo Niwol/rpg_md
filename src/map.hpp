@@ -87,6 +87,22 @@ public:
      */
     void handleEvent(SDL_Event& e);
 
+    /**
+     * @brief Get the position of the map
+     * 
+     * @param x gets the x position
+     * @param y gets the y position
+     */
+    void get_position(int* x, int* y);
+
+    /**
+     * @brief Get the tile dymentions of the map
+     * 
+     * @param w Gets the width of the tiles
+     * @param h Gets the height of the tiles 
+     */
+    void get_tileDymentions(int* w, int* h);
+
 private:
     cTexture m_tilemapTexture;
 
@@ -108,6 +124,7 @@ private:
     int m_mouseY;
     bool m_mouseButton1Hold;
 
+    // Map rendering position
     int m_posX;
     int m_posY;
 };

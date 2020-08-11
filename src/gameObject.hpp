@@ -13,7 +13,7 @@ public:
      * 
      * @param name name of the object
      */
-    cGameObject(std::string name);
+    cGameObject(std::string name = "Object");
 
     /**
      * @brief Destroy the c Game Object object

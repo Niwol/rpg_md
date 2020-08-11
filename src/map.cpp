@@ -15,6 +15,8 @@ cMap::cMap(int cols, int rows)
     m_cells = new sCell[m_nCells];
 
     for (int i = 0; i < m_nCells; i++) {
+        m_cells[i].solid = false;
+
         m_cells[i].tmCol = 0;
         m_cells[i].tmRow = 0;
     }
@@ -22,6 +24,9 @@ cMap::cMap(int cols, int rows)
     m_selectedTile = 0;
 
     m_mouseButton1Hold = false;
+
+    m_posX = 0;
+    m_posY = 0;
 }
 
 cMap::~cMap()
@@ -188,4 +193,16 @@ void cMap::handleEvent(SDL_Event& e)
         m_cells[y * m_cols + x].tmCol = m_selectedTile % m_tilemapCols;
         m_cells[y * m_cols + x].tmRow = m_selectedTile / m_tilemapCols;
     }
+}
+
+void cMap::get_position(int* x, int* y)
+{
+    *x = m_posX;
+    *y = m_posY;
+}
+
+void cMap::get_tileDymentions(int* w, int* h)
+{
+    *w = m_tileWidth;
+    *h = m_tileHeight;
 }
