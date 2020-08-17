@@ -1,32 +1,27 @@
 #include "map.hpp"
 
-cMap::cMap(int cols, int rows)
+cMap::cMap(SDL_Window* window, SDL_Renderer* renderer, int cols, int rows)
+    : m_tileWidth(0)
+    , m_tileHeight(0)
+    , m_tilemapCols(0)
+    , m_tilemapRows(0)
+    , m_cols(cols)
+    , m_rows(rows)
+    , m_nCells(m_cols * m_rows)
+    , m_cells(new sCell[m_nCells])
+    , m_selectedTile(0)
+    , m_window(window)
+    , m_renderer(renderer)
+    , m_tilemapTexture(window, renderer)
+    , m_mouseButton1Hold(false)
+    , m_posX(0)
+    , m_posY(0)
 {
-    m_tileWidth = 0;
-    m_tileHeight = 0;
-
-    m_tilemapCols = 0;
-    m_tilemapRows = 0;
-
-    m_cols = cols;
-    m_rows = rows;
-
-    m_nCells = m_cols * m_rows;
-    m_cells = new sCell[m_nCells];
-
     for (int i = 0; i < m_nCells; i++) {
         m_cells[i].solid = false;
-
         m_cells[i].tmCol = 0;
         m_cells[i].tmRow = 0;
     }
-
-    m_selectedTile = 0;
-
-    m_mouseButton1Hold = false;
-
-    m_posX = 0;
-    m_posY = 0;
 }
 
 cMap::~cMap()
@@ -35,9 +30,9 @@ cMap::~cMap()
     delete m_cells;
 }
 
-bool cMap::loadTileMap(SDL_Window* window, SDL_Renderer* renderer, std::string path, int cols, int rows, bool alpha)
+bool cMap::loadTileMap(std::string path, int cols, int rows, bool alpha)
 {
-    if (!m_tilemapTexture.loadFromFile(window, renderer, path, alpha)) {
+    if (!m_tilemapTexture.loadFromFile(path, alpha)) {
         printf("Failed to load tilemap texture!\n");
         return false;
     }
@@ -90,16 +85,16 @@ bool cMap::save(std::string path)
     }
 }
 
-void cMap::render(SDL_Renderer* renderer, int x, int y)
+void cMap::render(int x, int y)
 {
     SDL_Color c;
-    SDL_GetRenderDrawColor(renderer, &c.r, &c.g, &c.b, &c.a);
+    SDL_GetRenderDrawColor(m_renderer, &c.r, &c.g, &c.b, &c.a);
 
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
     SDL_Rect rect = { x - 1, y - 1, m_tileWidth * m_cols + 2, m_tileHeight * m_rows + 2 };
-    SDL_RenderDrawRect(renderer, &rect);
+    SDL_RenderDrawRect(m_renderer, &rect);
 
-    SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
+    SDL_SetRenderDrawColor(m_renderer, 200, 200, 200, 255);
     for (int i = 0; i < m_tileHeight * m_rows; i++) {
         int x1 = x;
         int y1 = y + i;
@@ -107,7 +102,7 @@ void cMap::render(SDL_Renderer* renderer, int x, int y)
         int x2 = x1 + m_tileWidth * m_cols - 1;
         int y2 = y1;
 
-        SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+        SDL_RenderDrawLine(m_renderer, x1, y1, x2, y2);
     }
 
     for (int i = 0; i < m_nCells; i++) {
@@ -120,13 +115,12 @@ void cMap::render(SDL_Renderer* renderer, int x, int y)
             &clip);
     }
 
-    SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
-
+    SDL_SetRenderDrawColor(m_renderer, c.r, c.g, c.b, c.a);
     m_posX = x;
     m_posY = y;
 }
 
-void cMap::renderTilemap(SDL_Renderer* renderer, int x, int y)
+void cMap::renderTilemap(int x, int y)
 {
     m_tilemapTexture.render(x, y);
 
@@ -135,8 +129,8 @@ void cMap::renderTilemap(SDL_Renderer* renderer, int x, int y)
         m_tileWidth + 2,
         m_tileHeight + 2 };
 
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderDrawRect(renderer, &rect);
+    SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
+    SDL_RenderDrawRect(m_renderer, &rect);
 }
 
 void cMap::handleEvent(SDL_Event& e)

@@ -10,19 +10,22 @@
 
 class cDynamic : public cGameObject {
 public:
-    cDynamic(int currentCellCol, int currentCellRow, std::string name = "Object");
+    cDynamic(SDL_Window*, SDL_Renderer*, int currentCellCol, int currentCellRow, std::string name = "Object");
     ~cDynamic();
 
-    bool loadSpriteSheet(SDL_Window* window, SDL_Renderer* renderer, std::string path);
+    bool loadSpriteSheet(std::string path);
 
     // Placeholder function
-    void render(SDL_Renderer* renderer, cMap& map);
+    void render(cMap& map);
 
 private:
     int m_health;
 
     int m_currentCellCol;
     int m_currentCellRow;
+
+    SDL_Window* m_window;
+    SDL_Renderer* m_renderer;
 
     cTexture m_spriteSheet;
 };

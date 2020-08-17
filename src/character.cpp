@@ -1,16 +1,14 @@
 #include "character.hpp"
 
-cCharacter::cCharacter()
+cCharacter::cCharacter(SDL_Window* window, SDL_Renderer* renderer)
+    : m_x(312)
+    , m_y(90)
+    , m_speed(2.0f)
+    , m_currentState(IDLE)
+    , m_currentFrame(0)
+    , m_faceDirection(DOWN)
+    , m_mainSpriteSheet(window, renderer)
 {
-    m_x = 320;
-    m_y = 90;
-
-    m_speed = 2.0f;
-
-    m_currentState = IDLE;
-    m_currentFrame = 0;
-    m_faceDirection = DOWN;
-
     for (int i = 0; i < 5; i++)
         m_keyHeld[i] = false;
 }
@@ -20,9 +18,9 @@ cCharacter::~cCharacter()
     m_mainSpriteSheet.free();
 }
 
-bool cCharacter::loadSpriteSheet(SDL_Window* window, SDL_Renderer* renderer, std::string path)
+bool cCharacter::loadSpriteSheet(std::string path)
 {
-    return m_mainSpriteSheet.loadFromFile(window, renderer, path, true);
+    return m_mainSpriteSheet.loadFromFile(path, true);
 }
 
 void cCharacter::render()

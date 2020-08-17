@@ -13,7 +13,7 @@ public:
      * @brief Construct a new c Texture object
      * 
      */
-    cTexture();
+    cTexture(SDL_Window*, SDL_Renderer*);
 
     /**
      * @brief Destroy the c Texture object
@@ -38,7 +38,7 @@ public:
      * @return true in succes
      * @return false in faliure
      */
-    bool loadFromFile(SDL_Window* window, SDL_Renderer* renderer, std::string path, bool alpha = false);
+    bool loadFromFile(std::string path, bool alpha = false);
 
     /**
      * @brief Renders the texture to the screen
@@ -105,6 +105,7 @@ private:
     int m_height;
 
     SDL_Renderer* m_renderer;
+    SDL_Window* m_window;
 };
 
 #endif
