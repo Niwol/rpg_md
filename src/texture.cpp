@@ -1,11 +1,12 @@
 #include "texture.hpp"
 
-cTexture::cTexture()
+cTexture::cTexture(SDL_Window* window, SDL_Renderer* renderer)
 {
     m_texture = NULL;
-
     m_width = 0;
     m_height = 0;
+    m_renderer = renderer;
+    m_window = window;
 }
 
 cTexture::~cTexture()
@@ -24,12 +25,12 @@ void cTexture::free()
     }
 }
 
-bool cTexture::loadFromFile(SDL_Window* window, SDL_Renderer* renderer, std::string path, bool alpha)
+bool cTexture::loadFromFile(std::string path, bool alpha)
 {
     free();
 
     SDL_Texture* newTexture = NULL;
-    Uint32 format = alpha ? SDL_PIXELFORMAT_ARGB32 : SDL_GetWindowPixelFormat(window);
+    Uint32 format = alpha ? SDL_PIXELFORMAT_ARGB32 : SDL_GetWindowPixelFormat(m_window);
 
     // Load surface
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
@@ -49,7 +50,7 @@ bool cTexture::loadFromFile(SDL_Window* window, SDL_Renderer* renderer, std::str
     }
 
     // Create blank texture
-    newTexture = SDL_CreateTexture(renderer, format, SDL_TEXTUREACCESS_STREAMING, formatedSurface->w, formatedSurface->h);
+    newTexture = SDL_CreateTexture(m_renderer, format, SDL_TEXTUREACCESS_STREAMING, formatedSurface->w, formatedSurface->h);
     if (newTexture == NULL) {
         printf("Could not create blank texture! SDL_ERROR: %s\n", SDL_GetError());
 
@@ -74,8 +75,6 @@ bool cTexture::loadFromFile(SDL_Window* window, SDL_Renderer* renderer, std::str
 
     SDL_FreeSurface(loadedSurface);
     SDL_FreeSurface(formatedSurface);
-
-    m_renderer = renderer;
 
     return true;
 }

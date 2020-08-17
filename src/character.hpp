@@ -25,7 +25,7 @@ public:
      * @brief Construct a new c Character object
      * 
      */
-    cCharacter();
+    cCharacter(SDL_Window*, SDL_Renderer*);
 
     /**
      * @brief Destroy the c Character object
@@ -42,7 +42,7 @@ public:
      * @return true in succes
      * @return false in faliure
      */
-    bool loadSpriteSheet(SDL_Window* window, SDL_Renderer* renderer, std::string path);
+    bool loadSpriteSheet(std::string path);
 
     /**
      * @brief Renders the character on its current xy position and with the apropriated sprite
