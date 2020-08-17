@@ -22,7 +22,7 @@ public:
      * @param cols number of collums of the map
      * @param rows number of rows of the map
      */
-    cMap(int cols, int rows);
+    cMap(SDL_Window*, SDL_Renderer*, int cols, int rows);
 
     /**
      * @brief Destroy the c Map object
@@ -42,7 +42,7 @@ public:
      * @return true in succes
      * @return false in faliure
      */
-    bool loadTileMap(SDL_Window* window, SDL_Renderer* renderer, std::string path, int cols, int rows, bool alpha);
+    bool loadTileMap(std::string path, int cols, int rows, bool alpha);
 
     /**
      * @brief Loads a map by reading a file
@@ -69,7 +69,7 @@ public:
      * @param x The x coordonate to render the map to
      * @param y The y coordonate to render the map to
      */
-    void render(SDL_Renderer* renderer, int x = 0, int y = 0);
+    void render(int x = 0, int y = 0);
 
     /**
      * @brief Renders the hole tilemap texture to the screen. Useful for creating maps and debugging
@@ -78,7 +78,7 @@ public:
      * @param x The x coordonate to render the tilemap texture to
      * @param y The y coordonate to render the tilemap texture to
      */
-    void renderTilemap(SDL_Renderer* renderer, int x, int y);
+    void renderTilemap(int x, int y);
 
     /**
      * @brief Handels the events related to create a map: tile selection and placing
@@ -127,6 +127,9 @@ private:
     // Map rendering position
     int m_posX;
     int m_posY;
+
+    SDL_Window* m_window;
+    SDL_Renderer* m_renderer;
 };
 
 #endif

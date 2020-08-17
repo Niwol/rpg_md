@@ -32,23 +32,22 @@ int main()
     } else {
         SDL_Event e;
 
-        cMap map(40, 30);
-        map.loadTileMap(window, renderer,
-            "files/assets/tilemaps/tilemap_nature.png", 10, 20, true);
+        cMap map(window, renderer, 40, 30);
+        map.loadTileMap("files/assets/tilemaps/tilemap_nature.png", 10, 20, true);
         map.load("files/maps/test.map");
 
-        cCharacter c;
-        c.loadSpriteSheet(window, renderer, "files/assets/characters/player.png");
+        cCharacter c(window, renderer);
+        c.loadSpriteSheet("files/assets/characters/player.png");
 
-        cTexture t;
-        t.loadFromFile(window, renderer, "files/assets/characters/set.png");
+        cTexture t(window, renderer);
+        t.loadFromFile("files/assets/characters/set.png");
 
         cGameObject o("Test");
-        cDynamic d1(2, 3);
-        cDynamic d2(5, 9);
+        cDynamic d1(window, renderer, 2, 3);
+        cDynamic d2(window, renderer, 5, 9);
 
-        d1.loadSpriteSheet(window, renderer, "files/assets/characters/player.png");
-        d2.loadSpriteSheet(window, renderer, "files/assets/characters/enemy.png");
+        d1.loadSpriteSheet("files/assets/characters/player.png");
+        d2.loadSpriteSheet("files/assets/characters/enemy.png");
 
         std::cout << "o = " << o.get_name() << std::endl;
         std::cout << "d = " << d1.get_name() << std::endl;
@@ -80,15 +79,15 @@ int main()
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
             SDL_RenderClear(renderer);
 
-            map.render(renderer, 550, 80);
-            map.renderTilemap(renderer, 10, 20);
+            map.render(550, 80);
+            map.renderTilemap(10, 20);
 
             c.render();
 
             t.render(100, 200);
 
-            d1.render(renderer, map);
-            d2.render(renderer, map);
+            d1.render(map);
+            d2.render(map);
 
             SDL_RenderPresent(renderer);
 
