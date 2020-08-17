@@ -9,8 +9,8 @@
 #include "map.hpp"
 #include "texture.hpp"
 
-constexpr int SCREEN_W = 1900;
-constexpr int SCREEN_H = 1000;
+constexpr int SCREEN_W = 1280;
+constexpr int SCREEN_H = 720;
 
 bool init(SDL_Window** w, SDL_Renderer** r);
 
@@ -125,7 +125,7 @@ bool init(SDL_Window** w, SDL_Renderer** r)
     printf("x = %d\ny = %d\nw = %d\nh = %d\n", rect.x, rect.y, rect.w, rect.h);
 
     *w = SDL_CreateWindow("RPG Test", SDL_WINDOWPOS_UNDEFINED,
-        SDL_WINDOWPOS_UNDEFINED, rect.w, rect.h,
+        SDL_WINDOWPOS_UNDEFINED, SCREEN_W, SCREEN_H,
         SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN);
     if (*w == NULL) {
         printf("Unable to create window! SDL_ERROR: %s\n", SDL_GetError());
