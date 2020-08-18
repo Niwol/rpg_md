@@ -1,7 +1,8 @@
 #include "character.hpp"
 
-cCharacter::cCharacter(SDL_Window* window, SDL_Renderer* renderer)
-    : m_x(312)
+cCharacter::cCharacter(SDL_Window* window, SDL_Renderer* renderer, int currentCellCol, int currentCellRow, int numberOfAnimations, std::string name)
+    : cDynamic(window, renderer, currentCellCol, currentCellRow, numberOfAnimations, name)
+    , m_x(312)
     , m_y(90)
     , m_speed(2.0f)
     , m_currentState(IDLE)
@@ -23,7 +24,7 @@ bool cCharacter::loadSpriteSheet(std::string path)
     return m_mainSpriteSheet.loadFromFile(path, true);
 }
 
-void cCharacter::render()
+void cCharacter::render(cMap& map)
 {
     SDL_Rect renderQuad = { 0, 0, m_mainSpriteSheet.get_width() / 4, m_mainSpriteSheet.get_height() / 4 };
 
@@ -60,6 +61,23 @@ void cCharacter::render()
     }
 
     m_mainSpriteSheet.render(m_x, m_y, &renderQuad);
+
+    // New Rendering
+
+    SDL_SetRenderDrawColor(m_renderer, 255, 0, 255, 255);
+
+    int x, y;
+    int w, h;
+
+    map.get_position(&x, &y);
+    map.get_tileDymentions(&w, &h);
+
+    for (int i = 0; i < (w < h ? w : h) / 2; i++) {
+        SDL_Rect rect = { x + m_currentCellCol * w + i, y + m_currentCellRow * h + i, w - i * 2, h - i * 2 };
+        SDL_RenderDrawRect(m_renderer, &rect);
+    }
+
+    m_render.render(10, 10);
 }
 
 void cCharacter::handleEvent(SDL_Event& e)

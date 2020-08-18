@@ -1,0 +1,17 @@
+# IGNORING
+
+< Start
+> End
+
+< Render
+
+# Number of animations:
+4
+
+# Frames per clip / Number of clips / Width / Heigth / Off x / Off y
+10 4 32 32 0 0
+10 4 32 32 0 0
+10 4 32 32 0 0
+10 4 32 32 0 0
+
+> Render

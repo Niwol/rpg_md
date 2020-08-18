@@ -87,6 +87,7 @@ public:
      */
     void handleEvent(SDL_Event& e);
 
+    // Accessors
     /**
      * @brief Get the position of the map
      * 
@@ -96,7 +97,7 @@ public:
     void get_position(int* x, int* y);
 
     /**
-     * @brief Get the tile dymentions of the map
+     * @brief Get the tile dymentions (width/heigth of the tile) of the map
      * 
      * @param w Gets the width of the tiles
      * @param h Gets the height of the tiles 

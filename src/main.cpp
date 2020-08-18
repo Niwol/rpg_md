@@ -36,21 +36,24 @@ int main()
         map.loadTileMap("files/assets/tilemaps/tilemap_nature.png", 10, 20, true);
         map.load("files/maps/test.map");
 
-        cCharacter c(window, renderer);
+        cCharacter c(window, renderer, 2, 2, 4);
         c.loadSpriteSheet("files/assets/characters/player.png");
 
         cTexture t(window, renderer);
         t.loadFromFile("files/assets/characters/set.png");
 
         cGameObject o("Test");
-        cDynamic d1(window, renderer, 2, 3);
-        cDynamic d2(window, renderer, 5, 9);
+        cDynamic d1(window, renderer, 2, 3, 5);
+        cDynamic d2(window, renderer, 5, 9, 5);
 
         d1.loadSpriteSheet("files/assets/characters/player.png");
         d2.loadSpriteSheet("files/assets/characters/enemy.png");
 
         std::cout << "o = " << o.get_name() << std::endl;
         std::cout << "d = " << d1.get_name() << std::endl;
+
+        cRender render(window, renderer, 4);
+        render.load("files/dynamicObjects/characters/test.dyn");
 
         while (!quit) {
             // Events
@@ -82,7 +85,7 @@ int main()
             map.render(550, 80);
             map.renderTilemap(10, 20);
 
-            c.render();
+            c.render(map);
 
             t.render(100, 200);
 
@@ -124,9 +127,9 @@ bool init(SDL_Window** w, SDL_Renderer** r)
     SDL_GetDisplayBounds(0, &rect);
     printf("x = %d\ny = %d\nw = %d\nh = %d\n", rect.x, rect.y, rect.w, rect.h);
 
-    *w = SDL_CreateWindow("RPG Test", SDL_WINDOWPOS_UNDEFINED,
-        SDL_WINDOWPOS_UNDEFINED, SCREEN_W, SCREEN_H,
-        SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN);
+    *w = SDL_CreateWindow("RPG Test", 200,
+        50, SCREEN_W, SCREEN_H,
+        SDL_WINDOW_SHOWN);
     if (*w == NULL) {
         printf("Unable to create window! SDL_ERROR: %s\n", SDL_GetError());
         return false;

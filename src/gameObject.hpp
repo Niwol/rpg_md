@@ -28,7 +28,7 @@ public:
      */
     std::string get_name();
 
-private:
+protected:
     std::string m_name;
 };
 

@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
+#include "dynamic.hpp"
 #include "texture.hpp"
 
 enum stats {
@@ -19,13 +20,13 @@ enum faceDirection {
     RIGHT = 4
 };
 
-class cCharacter {
+class cCharacter : public cDynamic {
 public:
     /**
      * @brief Construct a new c Character object
      * 
      */
-    cCharacter(SDL_Window*, SDL_Renderer*);
+    cCharacter(SDL_Window*, SDL_Renderer*, int currentCellCol, int currentCellRow, int numberOfAnimations, std::string name = "Object");
 
     /**
      * @brief Destroy the c Character object
@@ -48,7 +49,7 @@ public:
      * @brief Renders the character on its current xy position and with the apropriated sprite
      * 
      */
-    void render();
+    void render(cMap& map);
 
     /**
      * @brief Handels the event from the user input

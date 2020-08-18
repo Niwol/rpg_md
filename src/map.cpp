@@ -1,7 +1,8 @@
 #include "map.hpp"
 
 cMap::cMap(SDL_Window* window, SDL_Renderer* renderer, int cols, int rows)
-    : m_tileWidth(0)
+    : m_tilemapTexture(window, renderer)
+    , m_tileWidth(0)
     , m_tileHeight(0)
     , m_tilemapCols(0)
     , m_tilemapRows(0)
@@ -10,12 +11,11 @@ cMap::cMap(SDL_Window* window, SDL_Renderer* renderer, int cols, int rows)
     , m_nCells(m_cols * m_rows)
     , m_cells(new sCell[m_nCells])
     , m_selectedTile(0)
-    , m_window(window)
-    , m_renderer(renderer)
-    , m_tilemapTexture(window, renderer)
     , m_mouseButton1Hold(false)
     , m_posX(0)
     , m_posY(0)
+    , m_window(window)
+    , m_renderer(renderer)
 {
     for (int i = 0; i < m_nCells; i++) {
         m_cells[i].solid = false;
