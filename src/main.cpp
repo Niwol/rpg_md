@@ -36,24 +36,21 @@ int main()
         map.loadTileMap("files/assets/tilemaps/tilemap_nature.png", 10, 20, true);
         map.load("files/maps/test.map");
 
-        cCharacter c(window, renderer, 2, 2, 4);
+        cCharacter c(window, renderer, 2, 2);
         c.loadSpriteSheet("files/assets/characters/player.png");
 
         cTexture t(window, renderer);
         t.loadFromFile("files/assets/characters/set.png");
 
         cGameObject o("Test");
-        cDynamic d1(window, renderer, 2, 3, 5);
-        cDynamic d2(window, renderer, 5, 9, 5);
+        cDynamic d1(window, renderer, 2, 3);
+        cDynamic d2(window, renderer, 5, 9);
 
         d1.loadSpriteSheet("files/assets/characters/player.png");
         d2.loadSpriteSheet("files/assets/characters/enemy.png");
 
-        std::cout << "o = " << o.get_name() << std::endl;
-        std::cout << "d = " << d1.get_name() << std::endl;
-
-        cRender render(window, renderer, 4);
-        render.load("files/dynamicObjects/characters/test.dyn");
+        cRender render(window, renderer);
+        render.load(window, renderer, "files/dynamicObjects/characters/test.dyn");
 
         while (!quit) {
             // Events
@@ -122,10 +119,6 @@ bool init(SDL_Window** w, SDL_Renderer** r)
     if (!(IMG_Init(imgFlags) & imgFlags)) {
         printf("IMG could not initialize! IMG_ERROR: %s", IMG_GetError());
     }
-
-    SDL_Rect rect;
-    SDL_GetDisplayBounds(0, &rect);
-    printf("x = %d\ny = %d\nw = %d\nh = %d\n", rect.x, rect.y, rect.w, rect.h);
 
     *w = SDL_CreateWindow("RPG Test", 200,
         50, SCREEN_W, SCREEN_H,

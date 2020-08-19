@@ -10,18 +10,22 @@
 #include "texture.hpp"
 
 struct sAnimation {
+    sAnimation(SDL_Window* window, SDL_Renderer* renderer);
+
     int framesPerClip;
     int numberOfClips;
     int clipWidth;
     int clipHeigth;
+
+    cTexture spriteSheet;
 };
 
 class cRender {
 public:
-    cRender(SDL_Window* window, SDL_Renderer* renderer, int numberOfAnimations);
+    cRender(SDL_Window* window, SDL_Renderer* renderer);
     ~cRender();
 
-    bool load(std::string path);
+    bool load(SDL_Window* window, SDL_Renderer* renderer, std::string path);
 
     void render(int x, int y);
 

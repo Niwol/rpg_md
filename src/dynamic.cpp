@@ -5,14 +5,13 @@ cDynamic::cDynamic(
     SDL_Renderer* renderer,
     int currentCellCol,
     int currentCellRow,
-    int numberOfAnimations,
     std::string name)
     : cGameObject(name)
     , m_health(100)
     , m_currentCellCol(currentCellCol)
     , m_currentCellRow(currentCellRow)
     , m_window(window)
-    , m_render(window, renderer, numberOfAnimations)
+    , m_render(window, renderer)
     , m_renderer(renderer)
     , m_spriteSheet(window, renderer)
 {

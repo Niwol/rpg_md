@@ -26,7 +26,7 @@ public:
      * @brief Construct a new c Character object
      * 
      */
-    cCharacter(SDL_Window*, SDL_Renderer*, int currentCellCol, int currentCellRow, int numberOfAnimations, std::string name = "Object");
+    cCharacter(SDL_Window*, SDL_Renderer*, int currentCellCol, int currentCellRow, std::string name = "Object");
 
     /**
      * @brief Destroy the c Character object

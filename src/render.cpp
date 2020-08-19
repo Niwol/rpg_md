@@ -1,40 +1,67 @@
 #include "render.hpp"
 
-cRender::cRender(SDL_Window* window, SDL_Renderer* renderer, int numberOfAnimations)
+sAnimation::sAnimation(SDL_Window* window, SDL_Renderer* renderer)
+    : framesPerClip(0)
+    , numberOfClips(0)
+    , clipWidth(0)
+    , clipHeigth(0)
+    , spriteSheet(window, renderer)
+{
+}
+
+cRender::cRender(SDL_Window* window, SDL_Renderer* renderer)
     : m_renderer(renderer)
     , m_currentFrame(0)
-    , m_numberOfAnimations(numberOfAnimations)
-    , m_animations(new sAnimation[numberOfAnimations])
+    , m_numberOfAnimations(0)
+    , m_animations(NULL)
     , m_spriteSheet(window, renderer)
 {
-    for (int i = 0; i < numberOfAnimations; i++) {
-        m_animations[i].framesPerClip = 0;
-        m_animations[i].numberOfClips = 0;
-    }
 }
 
 cRender::~cRender()
 {
 }
 
-bool cRender::load(std::string path)
+bool cRender::load(SDL_Window* window, SDL_Renderer* renderer, std::string path)
 {
     std::ifstream file;
     std::string line;
 
+    int nbAnimations = 0;
+
     file.open(path);
     if (file.is_open()) {
-        while (!file.eof()) {
+
+        // Searching the render informaitons in file
+        while (!file.eof() && line != "< Render") {
             std::getline(file, line);
+        }
 
-            if (line == "< Render") {
-                while (line[0] != '>') {
+        // Render informations found
+        if (!file.eof()) {
 
-                    std::getline(file, line);
-                    if (line[0] != '#')
-                        printf("%s\n", line.c_str());
-                }
+            // Serching first info
+            do {
+                std::getline(file, line);
+            } while (line == "" || line[0] == '#');
+
+            printf("%s\n", line.c_str());
+
+            nbAnimations = atoi(line.c_str());
+
+            do {
+                std::getline(file, line);
+            } while (line == "" || line[0] == '#');
+
+            m_animations = new[nbAnimations] sAnimation(window, renderer);
+
+            for (int i = 0; i < nbAnimations; i++) {
+                printf("%s\n", line.c_str());
+
+                std::getline(file, line);
             }
+
+            printf("nbAnimations = %d\n", nbAnimations);
         }
     } else {
         return false;

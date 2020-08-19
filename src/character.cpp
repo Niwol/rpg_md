@@ -1,7 +1,7 @@
 #include "character.hpp"
 
-cCharacter::cCharacter(SDL_Window* window, SDL_Renderer* renderer, int currentCellCol, int currentCellRow, int numberOfAnimations, std::string name)
-    : cDynamic(window, renderer, currentCellCol, currentCellRow, numberOfAnimations, name)
+cCharacter::cCharacter(SDL_Window* window, SDL_Renderer* renderer, int currentCellCol, int currentCellRow, std::string name)
+    : cDynamic(window, renderer, currentCellCol, currentCellRow, name)
     , m_x(312)
     , m_y(90)
     , m_speed(2.0f)

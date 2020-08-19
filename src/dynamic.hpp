@@ -11,7 +11,7 @@
 
 class cDynamic : public cGameObject {
 public:
-    cDynamic(SDL_Window*, SDL_Renderer*, int currentCellCol, int currentCellRow, int numberOfAnimations, std::string name = "Object");
+    cDynamic(SDL_Window*, SDL_Renderer*, int currentCellCol, int currentCellRow, std::string name = "Object");
     ~cDynamic();
 
     bool loadSpriteSheet(std::string path);
