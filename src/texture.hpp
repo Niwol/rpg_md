@@ -40,6 +40,8 @@ public:
      */
     bool loadFromFile(std::string path, bool alpha = false);
 
+    bool createFromOtherTexture(cTexture& otherTexture, SDL_Rect* clip);
+
     /**
      * @brief Renders the texture to the screen
      * 
@@ -55,7 +57,7 @@ public:
      * @return true in succes
      * @return false in faliure or the texture is already locked
      */
-    bool lockTexture();
+    bool lockTexture(SDL_Rect* clip = NULL);
 
     /**
      * @brief Unlocks the texture
@@ -99,6 +101,8 @@ private:
     SDL_Texture* m_texture;
     void* m_pixels;
     int m_pitch;
+    Uint32 m_format;
+    bool m_alpha;
 
     // Dimensins
     int m_width;

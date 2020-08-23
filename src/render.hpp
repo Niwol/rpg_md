@@ -3,6 +3,8 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
+#include <vector>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -10,12 +12,14 @@
 #include "texture.hpp"
 
 struct sAnimation {
-    sAnimation(SDL_Window* window, SDL_Renderer* renderer);
+    sAnimation(SDL_Window* window, SDL_Renderer* renderer, int framesPerClip, int numberOfClips, int clipWidth, int clipHeight, int xOff, int yOff);
 
     int framesPerClip;
     int numberOfClips;
     int clipWidth;
     int clipHeigth;
+    int xOff;
+    int yOff;
 
     cTexture spriteSheet;
 };
@@ -37,7 +41,7 @@ private:
     int m_currentFrame;
     int m_numberOfAnimations;
 
-    sAnimation* m_animations;
+    std::vector<sAnimation*> m_animations;
 
     cTexture m_spriteSheet;
 };

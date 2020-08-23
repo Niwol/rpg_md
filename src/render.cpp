@@ -1,10 +1,12 @@
 #include "render.hpp"
 
-sAnimation::sAnimation(SDL_Window* window, SDL_Renderer* renderer)
-    : framesPerClip(0)
-    , numberOfClips(0)
-    , clipWidth(0)
-    , clipHeigth(0)
+sAnimation::sAnimation(SDL_Window* window, SDL_Renderer* renderer, int framesPerClip, int numberOfClips, int clipWidth, int clipHeight, int xOff, int yOff)
+    : framesPerClip(framesPerClip)
+    , numberOfClips(numberOfClips)
+    , clipWidth(clipWidth)
+    , clipHeigth(clipHeight)
+    , xOff(xOff)
+    , yOff(yOff)
     , spriteSheet(window, renderer)
 {
 }
@@ -13,7 +15,6 @@ cRender::cRender(SDL_Window* window, SDL_Renderer* renderer)
     : m_renderer(renderer)
     , m_currentFrame(0)
     , m_numberOfAnimations(0)
-    , m_animations(NULL)
     , m_spriteSheet(window, renderer)
 {
 }
@@ -53,13 +54,30 @@ bool cRender::load(SDL_Window* window, SDL_Renderer* renderer, std::string path)
                 std::getline(file, line);
             } while (line == "" || line[0] == '#');
 
-            m_animations = new[nbAnimations] sAnimation(window, renderer);
+            do {
+                std::stringstream stream;
 
-            for (int i = 0; i < nbAnimations; i++) {
+                int framesPerClip;
+                int numberOfClips;
+                int clipWidth;
+                int clipHeigth;
+                int xOff;
+                int yOff;
+
+                cTexture spriteSheet(window, renderer);
+
+                stream << line;
+
+                stream >> framesPerClip >> numberOfClips >> clipWidth >> clipHeigth >> xOff >> yOff;
+
                 printf("%s\n", line.c_str());
+                printf("fpc = %d ; nbClips = %d ; clipW = %d ; clipH = %d ; xOff = %d ; yOff = %d\n\n", framesPerClip, numberOfClips, clipWidth, clipHeigth, xOff, yOff);
+
+                m_animations.push_back(new sAnimation(window, renderer, framesPerClip, numberOfClips, clipWidth, clipHeigth, xOff, yOff));
 
                 std::getline(file, line);
-            }
+                nbAnimations--;
+            } while (nbAnimations > 0);
 
             printf("nbAnimations = %d\n", nbAnimations);
         }
@@ -80,13 +98,13 @@ void cRender::render(int x, int y)
         SDL_RenderDrawRect(m_renderer, &rect);
     }
 
-    SDL_Rect clip;
+    //SDL_Rect clip;
 }
 
 void cRender::set_animation(int nAimation, int framesPerClip, int numberOfClips, int clipWidth, int clipHeight)
 {
-    m_animations[nAimation].framesPerClip = framesPerClip;
-    m_animations[nAimation].numberOfClips = numberOfClips;
-    m_animations[nAimation].clipWidth = clipWidth;
-    m_animations[nAimation].clipHeigth = clipHeight;
+    m_animations[nAimation]->framesPerClip = framesPerClip;
+    m_animations[nAimation]->numberOfClips = numberOfClips;
+    m_animations[nAimation]->clipWidth = clipWidth;
+    m_animations[nAimation]->clipHeigth = clipHeight;
 }

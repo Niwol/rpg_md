@@ -52,6 +52,14 @@ int main()
         cRender render(window, renderer);
         render.load(window, renderer, "files/dynamicObjects/characters/test.dyn");
 
+        cTexture texture(window, renderer);
+        texture.loadFromFile("files/assets/characters/player.png", true);
+
+        SDL_Rect clip = { 0, 32, 32, 32 };
+
+        cTexture partialTexture(window, renderer);
+        partialTexture.createFromOtherTexture(texture, &clip);
+
         while (!quit) {
             // Events
             while (SDL_PollEvent(&e)) {
@@ -88,6 +96,9 @@ int main()
 
             d1.render(map);
             d2.render(map);
+
+            texture.render(100, 300);
+            partialTexture.render(100, 500);
 
             SDL_RenderPresent(renderer);
 
