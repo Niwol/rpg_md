@@ -77,7 +77,7 @@ void cCharacter::render(cMap& map)
         SDL_RenderDrawRect(m_renderer, &rect);
     }
 
-    m_render.render(10, 10);
+    //m_render.render(10, 10);
 }
 
 void cCharacter::handleEvent(SDL_Event& e)

@@ -14,6 +14,8 @@ sAnimation::sAnimation(SDL_Window* window, SDL_Renderer* renderer, int framesPer
 cRender::cRender(SDL_Window* window, SDL_Renderer* renderer)
     : m_renderer(renderer)
     , m_currentFrame(0)
+    , m_nCurrentAnimation(0)
+    , m_currentAnimation(NULL)
     , m_numberOfAnimations(0)
     , m_spriteSheet(window, renderer)
 {
@@ -21,6 +23,9 @@ cRender::cRender(SDL_Window* window, SDL_Renderer* renderer)
 
 cRender::~cRender()
 {
+    for (int i = 0; i < m_numberOfAnimations; i++) {
+        delete m_animations[i];
+    }
 }
 
 bool cRender::load(SDL_Window* window, SDL_Renderer* renderer, std::string path)
@@ -29,6 +34,9 @@ bool cRender::load(SDL_Window* window, SDL_Renderer* renderer, std::string path)
     std::string line;
 
     int nbAnimations = 0;
+    int currentHeight = 0;
+    std::string pathToSpriteSheet;
+    cTexture spriteSheet(window, renderer);
 
     file.open(path);
     if (file.is_open()) {
@@ -41,47 +49,71 @@ bool cRender::load(SDL_Window* window, SDL_Renderer* renderer, std::string path)
         // Render informations found
         if (!file.eof()) {
 
-            // Serching first info
+            // Searching the path to the sprite sheet
             do {
                 std::getline(file, line);
             } while (line == "" || line[0] == '#');
 
-            printf("%s\n", line.c_str());
+            pathToSpriteSheet = line;
 
-            nbAnimations = atoi(line.c_str());
+            if (spriteSheet.loadFromFile(pathToSpriteSheet, true)) {
 
-            do {
-                std::getline(file, line);
-            } while (line == "" || line[0] == '#');
+                // Searching the number of animations
+                do {
+                    std::getline(file, line);
+                } while (line == "" || line[0] == '#');
 
-            do {
-                std::stringstream stream;
+                nbAnimations = atoi(line.c_str());
+                m_numberOfAnimations = nbAnimations;
 
-                int framesPerClip;
-                int numberOfClips;
-                int clipWidth;
-                int clipHeigth;
-                int xOff;
-                int yOff;
+                // Searching start of animations informations
+                do {
+                    std::getline(file, line);
+                } while (line == "" || line[0] == '#');
 
-                cTexture spriteSheet(window, renderer);
+                // Setting the animations
+                do {
+                    SDL_Rect animationClip;
 
-                stream << line;
+                    std::stringstream stream;
 
-                stream >> framesPerClip >> numberOfClips >> clipWidth >> clipHeigth >> xOff >> yOff;
+                    int framesPerClip;
+                    int numberOfClips;
+                    int clipWidth;
+                    int clipHeigth;
+                    int xOff;
+                    int yOff;
 
-                printf("%s\n", line.c_str());
-                printf("fpc = %d ; nbClips = %d ; clipW = %d ; clipH = %d ; xOff = %d ; yOff = %d\n\n", framesPerClip, numberOfClips, clipWidth, clipHeigth, xOff, yOff);
+                    stream << line;
 
-                m_animations.push_back(new sAnimation(window, renderer, framesPerClip, numberOfClips, clipWidth, clipHeigth, xOff, yOff));
+                    stream >> framesPerClip >> numberOfClips >> clipWidth >> clipHeigth >> xOff >> yOff;
 
-                std::getline(file, line);
-                nbAnimations--;
-            } while (nbAnimations > 0);
+                    m_animations.push_back(new sAnimation(window, renderer, framesPerClip, numberOfClips, clipWidth, clipHeigth, xOff, yOff));
 
-            printf("nbAnimations = %d\n", nbAnimations);
+                    animationClip = { 0, currentHeight, clipWidth * numberOfClips, clipHeigth };
+                    m_animations.back()->spriteSheet.createFromOtherTexture(spriteSheet, &animationClip);
+
+                    currentHeight += clipHeigth;
+
+                    std::getline(file, line);
+                    nbAnimations--;
+                } while (nbAnimations > 0);
+
+            } else {
+
+                printf("Could not load the sprite sheet!\n");
+                file.close();
+                return false;
+            }
+
+        } else {
+            printf("No rendering informations in %s\n", path.c_str());
+            file.close();
+            return false;
         }
+
     } else {
+        printf("Could not open %s\n", path.c_str());
         return false;
     }
 
@@ -91,14 +123,34 @@ bool cRender::load(SDL_Window* window, SDL_Renderer* renderer, std::string path)
 
 void cRender::render(int x, int y)
 {
-    SDL_SetRenderDrawColor(m_renderer, 255, 0, 255, 255);
+    if (m_currentAnimation->numberOfClips == 1) {
+        m_currentAnimation->spriteSheet.render(x, y);
+    } else {
 
-    for (int i = 0; i < 10; i++) {
-        SDL_Rect rect = { x + i, y + i, 20 - i * 2, 20 - i * 2 };
-        SDL_RenderDrawRect(m_renderer, &rect);
+        SDL_Rect clip = {
+            (m_currentFrame / m_currentAnimation->framesPerClip) * m_currentAnimation->clipWidth,
+            0,
+            m_currentAnimation->clipWidth,
+            m_currentAnimation->clipHeigth
+        };
+
+        m_currentAnimation->spriteSheet.render(x, y, &clip);
     }
+}
 
-    //SDL_Rect clip;
+void cRender::startAnimation(int nAnimation)
+{
+    m_nCurrentAnimation = nAnimation;
+    m_currentAnimation = m_animations[nAnimation];
+    m_currentFrame = 0;
+}
+
+void cRender::nextFrame()
+{
+    m_currentFrame++;
+
+    if (m_currentFrame >= m_currentAnimation->framesPerClip * m_currentAnimation->numberOfClips)
+        m_currentFrame = 0;
 }
 
 void cRender::set_animation(int nAimation, int framesPerClip, int numberOfClips, int clipWidth, int clipHeight)

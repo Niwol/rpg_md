@@ -33,12 +33,17 @@ public:
 
     void render(int x, int y);
 
+    void startAnimation(int nAnimation);
+    void nextFrame();
+
     void set_animation(int nAimation, int framesPerClip, int numberOfClips, int clipWidth, int clipHeight);
 
 private:
     SDL_Renderer* m_renderer;
 
     int m_currentFrame;
+    int m_nCurrentAnimation;
+    sAnimation* m_currentAnimation;
     int m_numberOfAnimations;
 
     std::vector<sAnimation*> m_animations;

@@ -5,13 +5,15 @@
 
 < Render
 
+# Path to the sprite sheet
+files/assets/characters/player.png
+
 # Number of animations:
-4
+3
 
 # Frames per clip / Number of clips / Width / Heigth / x off / y off
 10 4 32 32 0 0
 10 4 32 32 0 0
-10 4 32 32 0 0
-10 4 32 32 0 0
+5 4 32 64 0 0
 
 > Render
