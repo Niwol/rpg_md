@@ -40,6 +40,14 @@ public:
      */
     bool loadFromFile(std::string path, bool alpha = false);
 
+    /**
+     * @brief Creates the texture from an other texture or the region of an other texture
+     * 
+     * @param otherTexture The texture to copy
+     * @param clip The region of the texture to copy
+     * @return true in success
+     * @return false in faliure
+     */
     bool createFromOtherTexture(cTexture& otherTexture, SDL_Rect* clip);
 
     /**
@@ -54,6 +62,7 @@ public:
     /**
      * @brief Locks the texture to acces its pixels
      * 
+     * @param clip The region to lock
      * @return true in succes
      * @return false in faliure or the texture is already locked
      */
@@ -87,7 +96,7 @@ public:
      * 
      * @return void*: a pointer to the array of pixels
      */
-    void* get_Pixels();
+    Uint32* get_Pixels();
 
     /**
      * @brief Get the Pitch of the texture
@@ -99,7 +108,7 @@ public:
 private:
     // The texture
     SDL_Texture* m_texture;
-    void* m_pixels;
+    Uint32* m_pixels;
     int m_pitch;
     Uint32 m_format;
     bool m_alpha;

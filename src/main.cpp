@@ -55,10 +55,33 @@ int main()
         cTexture texture(window, renderer);
         texture.loadFromFile("files/assets/characters/player.png", true);
 
-        SDL_Rect clip = { 0, 32, 32, 32 };
+        SDL_Rect clip = { 32, 32, 32 * 2, 32 * 2 };
 
         cTexture partialTexture(window, renderer);
         partialTexture.createFromOtherTexture(texture, &clip);
+        printf("W = %d\nH = %d\n", partialTexture.get_width(), partialTexture.get_height());
+
+        /*cTexture test(window, renderer);
+        test.loadFromFile("files/testTexture.png", false);
+        printf("Width = %d\nHeigth = %d\n", test.get_width(), test.get_height());
+
+        Uint32* pixels;
+        int pitch;
+
+        test.lockTexture(&clip);
+
+        pixels = (Uint32*)test.get_Pixels();
+        pitch = test.get_Pitch();
+
+        printf("pitch = %d\n", pitch);
+
+        for (int i = 0; i < 12; i++) {
+            printf("%8X ", pixels[i]);
+            if ((i + 1) % 3 == 0)
+                printf("\n");
+        }
+
+        test.unlockTexture();*/
 
         while (!quit) {
             // Events
@@ -99,6 +122,8 @@ int main()
 
             texture.render(100, 300);
             partialTexture.render(100, 500);
+
+            //test.render(200, 500);
 
             SDL_RenderPresent(renderer);
 
