@@ -29,7 +29,7 @@ public:
     cRender(SDL_Window* window, SDL_Renderer* renderer);
     ~cRender();
 
-    bool load(SDL_Window* window, SDL_Renderer* renderer, std::string path);
+    bool load(std::string path);
 
     void render(int x, int y);
 
@@ -39,6 +39,7 @@ public:
     void set_animation(int nAimation, int framesPerClip, int numberOfClips, int clipWidth, int clipHeight);
 
 private:
+    SDL_Window* m_window;
     SDL_Renderer* m_renderer;
 
     int m_currentFrame;
@@ -47,8 +48,6 @@ private:
     int m_numberOfAnimations;
 
     std::vector<sAnimation*> m_animations;
-
-    cTexture m_spriteSheet;
 };
 
 #endif

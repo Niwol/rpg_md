@@ -39,20 +39,6 @@ int main()
         cCharacter c(window, renderer, 2, 2);
         c.loadSpriteSheet("files/assets/characters/player.png");
 
-        cTexture t(window, renderer);
-        t.loadFromFile("files/assets/characters/set.png");
-
-        cGameObject o("Test");
-        cDynamic d1(window, renderer, 2, 3);
-        cDynamic d2(window, renderer, 5, 9);
-
-        d1.loadSpriteSheet("files/assets/characters/player.png");
-        d2.loadSpriteSheet("files/assets/characters/enemy.png");
-
-        cRender render(window, renderer);
-        render.load(window, renderer, "files/dynamicObjects/characters/test.dyn");
-        render.startAnimation(0);
-
         while (!quit) {
             // Events
             while (SDL_PollEvent(&e)) {
@@ -63,16 +49,6 @@ int main()
                     switch (e.key.keysym.sym) {
                     case SDLK_ESCAPE:
                         quit = true;
-                        break;
-
-                    case SDLK_KP_1:
-                        render.startAnimation(0);
-                        break;
-                    case SDLK_KP_2:
-                        render.startAnimation(1);
-                        break;
-                    case SDLK_KP_3:
-                        render.startAnimation(2);
                         break;
                     }
                 }
@@ -95,17 +71,7 @@ int main()
 
             c.render(map);
 
-            t.render(100, 200);
-
-            d1.render(map);
-            d2.render(map);
-
-            //test.render(200, 500);
-
-            render.render(100, 300);
-
             SDL_RenderPresent(renderer);
-            render.nextFrame();
 
             c.nextFrame();
         }

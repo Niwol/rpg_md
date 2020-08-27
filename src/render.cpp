@@ -12,12 +12,12 @@ sAnimation::sAnimation(SDL_Window* window, SDL_Renderer* renderer, int framesPer
 }
 
 cRender::cRender(SDL_Window* window, SDL_Renderer* renderer)
-    : m_renderer(renderer)
+    : m_window(window)
+    , m_renderer(renderer)
     , m_currentFrame(0)
     , m_nCurrentAnimation(0)
     , m_currentAnimation(NULL)
     , m_numberOfAnimations(0)
-    , m_spriteSheet(window, renderer)
 {
 }
 
@@ -28,7 +28,7 @@ cRender::~cRender()
     }
 }
 
-bool cRender::load(SDL_Window* window, SDL_Renderer* renderer, std::string path)
+bool cRender::load(std::string path)
 {
     std::ifstream file;
     std::string line;
@@ -36,7 +36,7 @@ bool cRender::load(SDL_Window* window, SDL_Renderer* renderer, std::string path)
     int nbAnimations = 0;
     int currentHeight = 0;
     std::string pathToSpriteSheet;
-    cTexture spriteSheet(window, renderer);
+    cTexture spriteSheet(m_window, m_renderer);
 
     file.open(path);
     if (file.is_open()) {
@@ -90,7 +90,7 @@ bool cRender::load(SDL_Window* window, SDL_Renderer* renderer, std::string path)
 
                         stream >> framesPerClip >> numberOfClips >> clipWidth >> clipHeigth >> xOff >> yOff;
 
-                        m_animations.push_back(new sAnimation(window, renderer, framesPerClip, numberOfClips, clipWidth, clipHeigth, xOff, yOff));
+                        m_animations.push_back(new sAnimation(m_window, m_renderer, framesPerClip, numberOfClips, clipWidth, clipHeigth, xOff, yOff));
 
                         animationClip = { 0, currentHeight, clipWidth * numberOfClips, clipHeigth };
                         m_animations.back()->spriteSheet.createFromOtherTexture(spriteSheet, &animationClip);
@@ -131,18 +131,21 @@ bool cRender::load(SDL_Window* window, SDL_Renderer* renderer, std::string path)
 
 void cRender::render(int x, int y)
 {
-    if (m_currentAnimation->numberOfClips == 1) {
-        m_currentAnimation->spriteSheet.render(x, y);
-    } else {
+    if (m_currentAnimation != NULL) {
 
-        SDL_Rect clip = {
-            (m_currentFrame / m_currentAnimation->framesPerClip) * m_currentAnimation->clipWidth,
-            0,
-            m_currentAnimation->clipWidth,
-            m_currentAnimation->clipHeigth
-        };
+        if (m_currentAnimation->numberOfClips == 1) {
+            m_currentAnimation->spriteSheet.render(x, y);
+        } else {
 
-        m_currentAnimation->spriteSheet.render(x, y, &clip);
+            SDL_Rect clip = {
+                (m_currentFrame / m_currentAnimation->framesPerClip) * m_currentAnimation->clipWidth,
+                0,
+                m_currentAnimation->clipWidth,
+                m_currentAnimation->clipHeigth
+            };
+
+            m_currentAnimation->spriteSheet.render(x, y, &clip);
+        }
     }
 }
 

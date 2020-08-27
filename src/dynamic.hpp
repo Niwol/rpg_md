@@ -14,7 +14,7 @@ public:
     cDynamic(SDL_Window*, SDL_Renderer*, int currentCellCol, int currentCellRow, std::string name = "Object");
     ~cDynamic();
 
-    bool loadSpriteSheet(std::string path);
+    bool load(std::string path);
 
     // Placeholder function
     void render(cMap& map);
@@ -26,10 +26,8 @@ protected:
     int m_currentCellRow;
 
     SDL_Window* m_window;
-    cRender m_render;
     SDL_Renderer* m_renderer;
-
-    cTexture m_spriteSheet;
+    cRender m_render;
 };
 
 #endif

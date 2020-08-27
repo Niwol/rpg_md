@@ -11,9 +11,8 @@ cDynamic::cDynamic(
     , m_currentCellCol(currentCellCol)
     , m_currentCellRow(currentCellRow)
     , m_window(window)
-    , m_render(window, renderer)
     , m_renderer(renderer)
-    , m_spriteSheet(window, renderer)
+    , m_render(window, renderer)
 {
 }
 
@@ -21,9 +20,9 @@ cDynamic::~cDynamic()
 {
 }
 
-bool cDynamic::loadSpriteSheet(std::string path)
+bool cDynamic::load(std::string path)
 {
-    return m_spriteSheet.loadFromFile(path, true);
+    return m_render.load(path);
 }
 
 void cDynamic::render(cMap& map)
@@ -43,6 +42,4 @@ void cDynamic::render(cMap& map)
 
     rect.x = 0;
     rect.y = 0;
-
-    m_spriteSheet.render(tileW * m_currentCellCol + offX, tileH * m_currentCellRow + offY, &rect);
 }
