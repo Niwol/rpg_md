@@ -13,7 +13,7 @@ files/assets/characters/player.png
 
 # Frames per clip / Number of clips / Width / Heigth / x off / y off
 10 4 32 32 0 0
-10 4 32 32 0 0
+10 2 32 32 0 0
 5 4 32 64 0 0
 
 > Render
