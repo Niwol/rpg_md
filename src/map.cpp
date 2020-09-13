@@ -195,8 +195,8 @@ void cMap::get_position(int* x, int* y)
     *y = m_posY;
 }
 
-void cMap::get_tileDymentions(int* w, int* h)
-{
-    *w = m_tileWidth;
-    *h = m_tileHeight;
-}
+int cMap::get_tileWidth() { return m_tileWidth; }
+int cMap::get_tileHeigth() { return m_tileHeight; }
+
+int cMap::get_cols() { return m_cols; }
+int cMap::get_rows() { return m_rows; }

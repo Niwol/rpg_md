@@ -14,6 +14,7 @@ sAnimation::sAnimation(SDL_Window* window, SDL_Renderer* renderer, int framesPer
 cRender::cRender(SDL_Window* window, SDL_Renderer* renderer)
     : m_window(window)
     , m_renderer(renderer)
+    , m_pause(true)
     , m_currentFrame(0)
     , m_nCurrentAnimation(0)
     , m_currentAnimation(NULL)
@@ -38,6 +39,8 @@ bool cRender::load(std::string path)
     std::string pathToSpriteSheet;
     cTexture spriteSheet(m_window, m_renderer);
 
+    m_numberOfAnimations = 0;
+
     file.open(path);
     if (file.is_open()) {
 
@@ -50,6 +53,8 @@ bool cRender::load(std::string path)
         if (!file.eof()) {
 
             while (line[0] != '>') {
+
+                currentHeight = 0;
 
                 // Searching the path to the sprite sheet
                 do {
@@ -66,7 +71,7 @@ bool cRender::load(std::string path)
                     } while (line == "" || line[0] == '#');
 
                     nbAnimations = atoi(line.c_str());
-                    m_numberOfAnimations = nbAnimations;
+                    m_numberOfAnimations += nbAnimations;
 
                     // Searching start of animations informations
                     do {
@@ -152,6 +157,7 @@ void cRender::render(int x, int y)
 void cRender::startAnimation(int nAnimation)
 {
     if (nAnimation < m_numberOfAnimations) {
+        m_pause = false;
         m_nCurrentAnimation = nAnimation;
         m_currentAnimation = m_animations[nAnimation];
         m_currentFrame = 0;
@@ -160,12 +166,33 @@ void cRender::startAnimation(int nAnimation)
     }
 }
 
+void cRender::restartAnimation()
+{
+    m_pause = false;
+    m_currentFrame = 0;
+}
+
+void cRender::pauseAnimation(bool set)
+{
+    m_pause = set;
+}
+
+void cRender::stopAnimation()
+{
+    m_pause = true;
+    m_currentFrame = 0;
+    m_currentAnimation = NULL;
+}
+
 void cRender::nextFrame()
 {
-    m_currentFrame++;
+    if (m_pause == false) {
 
-    if (m_currentFrame >= m_currentAnimation->framesPerClip * m_currentAnimation->numberOfClips)
-        m_currentFrame = 0;
+        m_currentFrame++;
+
+        if (m_currentFrame >= m_currentAnimation->framesPerClip * m_currentAnimation->numberOfClips)
+            m_currentFrame = 0;
+    }
 }
 
 void cRender::set_animation(int nAimation, int framesPerClip, int numberOfClips, int clipWidth, int clipHeight)

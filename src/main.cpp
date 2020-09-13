@@ -32,12 +32,15 @@ int main()
     } else {
         SDL_Event e;
 
-        cMap map(window, renderer, 40, 30);
+        cMap map(window, renderer, 20, 16);
         map.loadTileMap("files/assets/tilemaps/tilemap_nature.png", 10, 20, true);
         map.load("files/maps/test.map");
 
         cCharacter c(window, renderer, 2, 2);
         c.loadSpriteSheet("files/assets/characters/player.png");
+
+        cDynamic dyn(window, renderer, 5, 4);
+        dyn.load("files/dynamicObjects/characters/test.dyn");
 
         while (!quit) {
             // Events
@@ -50,17 +53,34 @@ int main()
                     case SDLK_ESCAPE:
                         quit = true;
                         break;
+
+                    case SDLK_z:
+                        dyn.move(MOVE_UP, map);
+                        break;
+
+                    case SDLK_s:
+                        dyn.move(MOVE_DOWN, map);
+                        break;
+
+                    case SDLK_q:
+                        dyn.move(MOVE_LEFT, map);
+                        break;
+
+                    case SDLK_d:
+                        dyn.move(MOVE_RIGHT, map);
+                        break;
                     }
                 }
 
                 if (e.type == SDL_MOUSEBUTTONDOWN) {
                 }
 
-                c.handleEvent(e);
+                //c.handleEvent(e);
                 map.handleEvent(e);
             }
 
-            c.move();
+            //c.move();
+            dyn.update();
 
             // Rendering
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -70,6 +90,8 @@ int main()
             map.renderTilemap(10, 20);
 
             c.render(map);
+
+            dyn.render(map);
 
             SDL_RenderPresent(renderer);
 

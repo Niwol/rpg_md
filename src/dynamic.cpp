@@ -8,6 +8,8 @@ cDynamic::cDynamic(
     std::string name)
     : cGameObject(name)
     , m_health(100)
+    , m_offCellX(0)
+    , m_offCellY(0)
     , m_currentCellCol(currentCellCol)
     , m_currentCellRow(currentCellRow)
     , m_window(window)
@@ -22,24 +24,82 @@ cDynamic::~cDynamic()
 
 bool cDynamic::load(std::string path)
 {
-    return m_render.load(path);
+    bool success = m_render.load(path);
+
+    if (success)
+        m_render.startAnimation(4);
+
+    return success;
+}
+
+void cDynamic::move(int direction, cMap& map)
+{
+    if (m_offCellX == 0 && m_offCellY == 0) {
+        switch (direction) {
+        case MOVE_UP:
+            if (m_currentCellRow > 0) {
+                m_currentCellRow--;
+                m_offCellY = map.get_tileHeigth();
+
+                m_render.startAnimation(MOVE_UP);
+            }
+            break;
+
+        case MOVE_DOWN:
+            if (m_currentCellRow < map.get_rows() - 1) {
+                m_currentCellRow++;
+                m_offCellY = -(map.get_tileHeigth());
+
+                m_render.startAnimation(MOVE_DOWN);
+            }
+            break;
+
+        case MOVE_LEFT:
+            if (m_currentCellCol > 0) {
+                m_currentCellCol--;
+                m_offCellX = map.get_tileWidth();
+
+                m_render.startAnimation(MOVE_LEFT);
+            }
+            break;
+
+        case MOVE_RIGHT:
+            if (m_currentCellCol < map.get_cols() - 1) {
+                m_currentCellCol++;
+                m_offCellX = -(map.get_tileWidth());
+
+                m_render.startAnimation(MOVE_RIGHT);
+            }
+            break;
+        }
+    }
+}
+
+void cDynamic::update()
+{
+    m_render.nextFrame();
+
+    if (m_offCellX != 0)
+        m_offCellX += m_offCellX < 0 ? 1 : -1;
+
+    if (m_offCellY != 0)
+        m_offCellY += m_offCellY < 0 ? 1 : -1;
+
+    if (m_offCellX == 0 && m_offCellY == 0) {
+        m_render.restartAnimation();
+        m_render.pauseAnimation(true);
+    }
 }
 
 void cDynamic::render(cMap& map)
 {
     int offX, offY;
-    int tileW, tileH;
-
-    SDL_Rect rect;
+    int x, y;
 
     map.get_position(&offX, &offY);
-    map.get_tileDymentions(&tileW, &tileH);
 
-    rect = { tileW * m_currentCellCol + offX, tileH * m_currentCellRow + offY, tileW, tileH };
+    x = map.get_tileWidth() * m_currentCellCol + offX + m_offCellX;
+    y = map.get_tileHeigth() * m_currentCellRow + offY + m_offCellY;
 
-    SDL_SetRenderDrawColor(m_renderer, 0, 0, 255, 255);
-    SDL_RenderDrawRect(m_renderer, &rect);
-
-    rect.x = 0;
-    rect.y = 0;
+    m_render.render(x, y);
 }

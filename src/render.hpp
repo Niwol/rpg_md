@@ -34,6 +34,9 @@ public:
     void render(int x, int y);
 
     void startAnimation(int nAnimation);
+    void restartAnimation();
+    void pauseAnimation(bool set);
+    void stopAnimation();
     void nextFrame();
 
     void set_animation(int nAimation, int framesPerClip, int numberOfClips, int clipWidth, int clipHeight);
@@ -42,6 +45,7 @@ private:
     SDL_Window* m_window;
     SDL_Renderer* m_renderer;
 
+    bool m_pause;
     int m_currentFrame;
     int m_nCurrentAnimation;
     sAnimation* m_currentAnimation;

@@ -97,12 +97,32 @@ public:
     void get_position(int* x, int* y);
 
     /**
-     * @brief Get the tile dymentions (width/heigth of the tile) of the map
+     * @brief Get the tile width
      * 
-     * @param w Gets the width of the tiles
-     * @param h Gets the height of the tiles 
+     * @return int
      */
-    void get_tileDymentions(int* w, int* h);
+    int get_tileWidth();
+
+    /**
+     * @brief Get the tile heigth
+     * 
+     * @return int
+     */
+    int get_tileHeigth();
+
+    /**
+     * @brief Get the number of collums of the map
+     * 
+     * @return int
+     */
+    int get_cols();
+
+    /**
+     * @brief Get the number of rows of the map
+     * 
+     * @return int 
+     */
+    int get_rows();
 
 private:
     cTexture m_tilemapTexture;

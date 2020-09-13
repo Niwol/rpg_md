@@ -70,7 +70,8 @@ void cCharacter::render(cMap& map)
     int w, h;
 
     map.get_position(&x, &y);
-    map.get_tileDymentions(&w, &h);
+    w = map.get_tileWidth();
+    h = map.get_tileHeigth();
 
     for (int i = 0; i < (w < h ? w : h) / 2; i++) {
         SDL_Rect rect = { x + m_currentCellCol * w + i, y + m_currentCellRow * h + i, w - i * 2, h - i * 2 };
