@@ -1,0 +1,63 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text></help_text><element><id>UMLClass</id><coordinates><x>360</x><y>100</y><w>160</w><h>80</h></coordinates><panel_attributes>cGameObject
+--
+cGameObject ()
+
+--
+# name : std::string</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>320</x><y>230</y><w>250</w><h>310</h></coordinates><panel_attributes>cDynamic
+--
+cDynamic ()
+~cDynamic ()
+
+load (path: std::string)
+
+move ()
+
+update ()
+render ()
+
+--
+- m_health : int
+
+- m_offCellX, m_offCellY : float
+- m_steps : float
+- m_numberOfSteps : int
+- m_currentFaceDirection : int
+- m_m_previousFaceDirection
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>170</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>750</x><y>50</y><w>100</w><h>60</h></coordinates><panel_attributes>cMap
+--
+
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>630</y><w>100</w><h>60</h></coordinates><panel_attributes>cPlayer
+--
+
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>270</x><y>530</y><w>120</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>100;10;100;60;10;60;10;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>140</x><y>270</y><w>100</w><h>60</h></coordinates><panel_attributes>cRender
+--
+
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>140</x><y>400</y><w>100</w><h>60</h></coordinates><panel_attributes>cTexture
+--
+
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>550</x><y>630</y><w>100</w><h>60</h></coordinates><panel_attributes>cAttack
+--
+
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>750</x><y>160</y><w>300</w><h>490</h></coordinates><panel_attributes>cSceneManager
+--
+cSceneManager ()
+~cSceneManager ()
+
+update ()
+render ()
+
+--
+
+- m_player : cPlayer
+- m_dynamics[ ] : cDynamics
+
+- m_map : cMap</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>230</x><y>290</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>320</y><w>50</w><h>100</h></coordinates><panel_attributes>lt=&lt;-
+m1=0.n</panel_attributes><additional_attributes>10;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>60</x><y>70</y><w>710</w><h>370</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes><additional_attributes>80;340;10;340;10;10;690;10</additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>430</y><w>210</w><h>40</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes><additional_attributes>10;10;190;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>390</x><y>630</y><w>100</w><h>60</h></coordinates><panel_attributes>cEnemy
+--
+
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>530</y><w>30</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>Relation</id><coordinates><x>790</x><y>100</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element></diagram>

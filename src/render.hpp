@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <sstream>
 #include <vector>
 
@@ -10,6 +11,18 @@
 #include <SDL2/SDL_image.h>
 
 #include "texture.hpp"
+
+enum animationKey {
+    ANIMATION_KEY_IDLE_UP,
+    ANIMATION_KEY_IDLE_DOWN,
+    ANIMATION_KEY_IDLE_LEFT,
+    ANIMATION_KEY_IDLE_RIGHT,
+
+    ANIMATION_KEY_MOVE_UP,
+    ANIMATION_KEY_MOVE_DOWN,
+    ANIMATION_KEY_MOVE_LEFT,
+    ANIMATION_KEY_MOVE_RIGHT
+};
 
 struct sAnimation {
     sAnimation(SDL_Window* window, SDL_Renderer* renderer, int framesPerClip, int numberOfClips, int clipWidth, int clipHeight, int xOff, int yOff);
@@ -33,7 +46,7 @@ public:
 
     void render(int x, int y);
 
-    void startAnimation(int nAnimation);
+    void startAnimation(int animationKey);
     void restartAnimation();
     void pauseAnimation(bool set);
     void stopAnimation();
@@ -47,11 +60,10 @@ private:
 
     bool m_pause;
     int m_currentFrame;
-    int m_nCurrentAnimation;
-    sAnimation* m_currentAnimation;
-    int m_numberOfAnimations;
 
-    std::vector<sAnimation*> m_animations;
+    sAnimation* m_currentAnimation;
+
+    std::map<int, sAnimation*> m_animations;
 };
 
 #endif

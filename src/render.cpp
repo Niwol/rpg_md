@@ -16,17 +16,15 @@ cRender::cRender(SDL_Window* window, SDL_Renderer* renderer)
     , m_renderer(renderer)
     , m_pause(true)
     , m_currentFrame(0)
-    , m_nCurrentAnimation(0)
     , m_currentAnimation(NULL)
-    , m_numberOfAnimations(0)
 {
 }
 
 cRender::~cRender()
 {
-    for (int i = 0; i < m_numberOfAnimations; i++) {
-        delete m_animations[i];
-    }
+    /*while(!m_animations.empty()) {
+        
+    }*/
 }
 
 bool cRender::load(std::string path)
@@ -38,8 +36,6 @@ bool cRender::load(std::string path)
     int currentHeight = 0;
     std::string pathToSpriteSheet;
     cTexture spriteSheet(m_window, m_renderer);
-
-    m_numberOfAnimations = 0;
 
     file.open(path);
     if (file.is_open()) {
@@ -71,7 +67,6 @@ bool cRender::load(std::string path)
                     } while (line == "" || line[0] == '#');
 
                     nbAnimations = atoi(line.c_str());
-                    m_numberOfAnimations += nbAnimations;
 
                     // Searching start of animations informations
                     do {
@@ -84,21 +79,26 @@ bool cRender::load(std::string path)
 
                         std::stringstream stream;
 
+                        sAnimation* newAimation = NULL;
+
                         int framesPerClip;
                         int numberOfClips;
                         int clipWidth;
                         int clipHeigth;
                         int xOff;
                         int yOff;
+                        int enumKey;
 
                         stream << line;
 
-                        stream >> framesPerClip >> numberOfClips >> clipWidth >> clipHeigth >> xOff >> yOff;
+                        stream >> framesPerClip >> numberOfClips >> clipWidth >> clipHeigth >> xOff >> yOff >> enumKey;
 
-                        m_animations.push_back(new sAnimation(m_window, m_renderer, framesPerClip, numberOfClips, clipWidth, clipHeigth, xOff, yOff));
+                        newAimation = new sAnimation(m_window, m_renderer, framesPerClip, numberOfClips, clipWidth, clipHeigth, xOff, yOff);
 
                         animationClip = { 0, currentHeight, clipWidth * numberOfClips, clipHeigth };
-                        m_animations.back()->spriteSheet.createFromOtherTexture(spriteSheet, &animationClip);
+                        newAimation->spriteSheet.createFromOtherTexture(spriteSheet, &animationClip);
+
+                        m_animations.insert(std::pair<int, sAnimation*>(enumKey, newAimation));
 
                         currentHeight += clipHeigth;
 
@@ -154,15 +154,14 @@ void cRender::render(int x, int y)
     }
 }
 
-void cRender::startAnimation(int nAnimation)
+void cRender::startAnimation(int animationKey)
 {
-    if (nAnimation < m_numberOfAnimations) {
+    if (m_animations.count(animationKey)) {
         m_pause = false;
-        m_nCurrentAnimation = nAnimation;
-        m_currentAnimation = m_animations[nAnimation];
+        m_currentAnimation = m_animations.at(animationKey);
         m_currentFrame = 0;
     } else {
-        printf("Warning: this instance don't has %d animations!\n", nAnimation);
+        printf("Warning: this instance don't has %d animations!\n", animationKey);
     }
 }
 

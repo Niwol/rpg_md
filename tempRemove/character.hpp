@@ -8,7 +8,7 @@
 #include "texture.hpp"
 
 enum stats {
-    //    IDLE,
+    IDLE,
     WALKING
 };
 

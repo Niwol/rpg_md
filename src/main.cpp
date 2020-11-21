@@ -3,10 +3,11 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include "character.hpp"
+//#include "character.hpp"
 #include "dynamic.hpp"
 #include "gameObject.hpp"
 #include "map.hpp"
+#include "player.hpp"
 #include "texture.hpp"
 
 constexpr int SCREEN_W = 1280;
@@ -36,11 +37,8 @@ int main()
         map.loadTileMap("files/assets/tilemaps/tilemap_nature.png", 10, 20, true);
         map.load("files/maps/test.map");
 
-        cCharacter c(window, renderer, 2, 2);
-        c.loadSpriteSheet("files/assets/characters/player.png");
-
-        cDynamic dyn(window, renderer, 5, 4);
-        dyn.load("files/dynamicObjects/characters/test.dyn");
+        cPlayer player(window, renderer, &map, 3, 3);
+        player.load("files/dynamicObjects/characters/test.dyn");
 
         while (!quit) {
             // Events
@@ -53,34 +51,17 @@ int main()
                     case SDLK_ESCAPE:
                         quit = true;
                         break;
-
-                    case SDLK_z:
-                        dyn.move(MOVE_UP, map);
-                        break;
-
-                    case SDLK_s:
-                        dyn.move(MOVE_DOWN, map);
-                        break;
-
-                    case SDLK_q:
-                        dyn.move(MOVE_LEFT, map);
-                        break;
-
-                    case SDLK_d:
-                        dyn.move(MOVE_RIGHT, map);
-                        break;
                     }
                 }
 
                 if (e.type == SDL_MOUSEBUTTONDOWN) {
                 }
 
-                //c.handleEvent(e);
+                player.handleInput(e);
                 map.handleEvent(e);
             }
 
-            //c.move();
-            dyn.update();
+            player.update();
 
             // Rendering
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -89,13 +70,9 @@ int main()
             map.render(550, 80);
             map.renderTilemap(10, 20);
 
-            c.render(map);
-
-            dyn.render(map);
+            player.render();
 
             SDL_RenderPresent(renderer);
-
-            c.nextFrame();
         }
 
         map.save("files/maps/test.map");

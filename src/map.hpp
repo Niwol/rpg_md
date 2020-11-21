@@ -6,12 +6,17 @@
 #include <iostream>
 
 #include "texture.hpp"
+#include "dynamic.hpp"
+
+class cDynamic;
 
 struct sCell {
     bool solid;
 
     int tmCol;
     int tmRow;
+
+    cDynamic* dynamic;
 };
 
 class cMap {

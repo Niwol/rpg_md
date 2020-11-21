@@ -21,6 +21,7 @@ cMap::cMap(SDL_Window* window, SDL_Renderer* renderer, int cols, int rows)
         m_cells[i].solid = false;
         m_cells[i].tmCol = 0;
         m_cells[i].tmRow = 0;
+        m_cells[i].dynamic = NULL;
     }
 }
 
