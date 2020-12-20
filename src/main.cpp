@@ -3,12 +3,14 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include "sceneManager.hpp"
+
 //#include "character.hpp"
-#include "dynamic.hpp"
-#include "gameObject.hpp"
-#include "map.hpp"
-#include "player.hpp"
-#include "texture.hpp"
+//#include "dynamic.hpp"
+//#include "gameObject.hpp"
+//#include "map.hpp"
+//#include "player.hpp"
+//#include "texture.hpp"
 
 constexpr int SCREEN_W = 1280;
 constexpr int SCREEN_H = 720;
@@ -33,12 +35,19 @@ int main()
     } else {
         SDL_Event e;
 
-        cMap map(window, renderer, 20, 16);
-        map.loadTileMap("files/assets/tilemaps/tilemap_nature.png", 10, 20, true);
-        map.load("files/maps/test.map");
-
-        cPlayer player(window, renderer, &map, 3, 3);
-        player.load("files/dynamicObjects/characters/test.dyn");
+        cSceneManager manager(window, renderer);
+        manager.addEnemy(500, 300);
+        manager.addEnemy(600, 200);
+        manager.addEnemy(300, 500);
+        manager.addEnemy(400, 200);
+        manager.addEnemy(800, 600);
+        manager.addEnemy(900, 300);
+        manager.addEnemy(850, 100);
+        manager.addEnemy(700, 500);
+        manager.addEnemy(600, 500);
+        manager.addEnemy(750, 100);
+        manager.addEnemy(900, 500);
+        manager.addEnemy(200, 200);
 
         while (!quit) {
             // Events
@@ -56,30 +65,17 @@ int main()
 
                 if (e.type == SDL_MOUSEBUTTONDOWN) {
                 }
-
-                player.handleInput(e);
-                map.handleEvent(e);
             }
 
-            player.update();
+            manager.update();
 
             // Rendering
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-            SDL_RenderClear(renderer);
 
-            map.render(550, 80);
-            map.renderTilemap(10, 20);
-
-            player.render();
-
-            SDL_RenderPresent(renderer);
+            manager.render();
         }
-
-        map.save("files/maps/test.map");
     }
 
     // Dealocating memory
-
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
 
@@ -101,8 +97,9 @@ bool init(SDL_Window** w, SDL_Renderer** r)
         printf("IMG could not initialize! IMG_ERROR: %s", IMG_GetError());
     }
 
-    *w = SDL_CreateWindow("RPG Test", 200,
-        50, SCREEN_W, SCREEN_H,
+    *w = SDL_CreateWindow("RPG Test",
+        SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+        SCREEN_W, SCREEN_H,
         SDL_WINDOW_SHOWN);
     if (*w == NULL) {
         printf("Unable to create window! SDL_ERROR: %s\n", SDL_GetError());

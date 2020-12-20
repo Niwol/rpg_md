@@ -13,6 +13,7 @@ public:
      * @brief Construct a new c Texture object
      * 
      */
+    cTexture();
     cTexture(SDL_Window*, SDL_Renderer*);
 
     /**
@@ -20,6 +21,12 @@ public:
      * 
      */
     ~cTexture();
+
+    /**
+     * @brief Sets the window and render attribute
+     * 
+     */
+    void init(SDL_Window* window, SDL_Renderer* renderer);
 
     /**
      * @brief Dealocates the memory from the texture

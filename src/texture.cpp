@@ -1,5 +1,18 @@
 #include "texture.hpp"
 
+cTexture::cTexture()
+    : m_texture(NULL)
+    , m_pixels(NULL)
+    , m_pitch(0)
+    , m_format(SDL_PIXELFORMAT_RGBA8888)
+    , m_alpha(false)
+    , m_width(0)
+    , m_height(0)
+    , m_renderer(NULL)
+    , m_window(NULL)
+{
+}
+
 cTexture::cTexture(SDL_Window* window, SDL_Renderer* renderer)
     : m_texture(NULL)
     , m_pixels(NULL)
@@ -16,6 +29,12 @@ cTexture::cTexture(SDL_Window* window, SDL_Renderer* renderer)
 cTexture::~cTexture()
 {
     free();
+}
+
+void cTexture::init(SDL_Window* window, SDL_Renderer* renderer)
+{
+    m_window = window;
+    m_renderer = renderer;
 }
 
 void cTexture::free()
