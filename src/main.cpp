@@ -65,6 +65,8 @@ int main()
 
                 if (e.type == SDL_MOUSEBUTTONDOWN) {
                 }
+
+                manager.handleInput(e);
             }
 
             manager.update();

@@ -1,11 +1,12 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 
-#include "compnentType.hpp"
 #include <vector>
 
+#include "compnentType.hpp"
+
 struct sEntity {
-    int entityID;
+    id_t entityID;
     std::vector<sEntityComponent> components;
 };
 

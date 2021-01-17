@@ -2,12 +2,12 @@
 
 cAiSystem::cAiSystem() { }
 
-void cAiSystem::addComponenet(sPositionComponent* comp)
+void cAiSystem::addComponenet(std::shared_ptr<sPositionComponent> comp)
 {
     m_posComponents.push_back(comp);
 }
 
-void cAiSystem::removeComponent(sPositionComponent* comp)
+void cAiSystem::removeComponent(std::shared_ptr<sPositionComponent> comp)
 {
     // TODO
 }

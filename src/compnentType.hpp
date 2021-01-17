@@ -11,10 +11,10 @@ enum componentType {
 
 struct sEntityComponent {
     int componentType;
-    unsigned int componentID;
+    id_t componentID;
 };
 
-unsigned int getUnicID(int type, bool entity = false);
+id_t getUnicID(int type, bool entity = false);
 std::string getComponenetTypeString(int type);
 
 #endif // COMPONENT_TYPE_HPP

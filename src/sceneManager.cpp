@@ -14,8 +14,8 @@ cSceneManager::~cSceneManager()
 
 void cSceneManager::addEnemy(int x, int y)
 {
-    sPositionComponent* posComp = new sPositionComponent;
-    sRenderComponent* renderComp = new sRenderComponent;
+    std::shared_ptr<sPositionComponent> posComp = std::make_shared<sPositionComponent>();
+    std::shared_ptr<sRenderComponent> renderComp = std::make_shared<sRenderComponent>();
 
     renderComp->texture.init(m_window, m_renderer);
     renderComp->texture.loadFromFile("files/assets/characters/enemy.png", true);
@@ -25,7 +25,7 @@ void cSceneManager::addEnemy(int x, int y)
     posComp->y = y;
 
     int compType;
-    unsigned int compID;
+    id_t compID;
 
     sEntity ent;
     ent.entityID = getUnicID(0, true);
@@ -33,12 +33,12 @@ void cSceneManager::addEnemy(int x, int y)
     compType = POSITION_COMPONENT;
     compID = getUnicID(POSITION_COMPONENT);
     ent.components.push_back({ compType, compID });
-    m_posComponents.insert(std::pair<unsigned int, sPositionComponent*>(compID, posComp));
+    m_posComponents.insert(std::pair<id_t, std::shared_ptr<sPositionComponent>>(compID, posComp));
 
     compType = RENDER_COMPONENT;
     compID = getUnicID(RENDER_COMPONENT);
     ent.components.push_back({ compType, compID });
-    m_renderComponents.insert(std::pair<unsigned int, sRenderComponent*>(compID, renderComp));
+    m_renderComponents.insert(std::pair<id_t, std::shared_ptr<sRenderComponent>>(compID, renderComp));
 
     m_aiSystem.addComponenet(posComp);
     m_renderSystem.addComponent(renderComp, posComp);
@@ -54,6 +54,11 @@ void cSceneManager::addEnemy(int x, int y)
     printf("\n");
 
     m_entitys.push_back(ent);
+}
+
+void cSceneManager::handleInput(SDL_Event& e)
+{
+    m_inputManager.handleInput(e);
 }
 
 void cSceneManager::update()

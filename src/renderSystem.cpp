@@ -6,12 +6,12 @@ cRenderSystem::cRenderSystem(SDL_Window* window, SDL_Renderer* renderer)
 {
 }
 
-void cRenderSystem::addComponent(sRenderComponent* rendrerComp, sPositionComponent* posComp)
+void cRenderSystem::addComponent(std::shared_ptr<sRenderComponent> rendrerComp, std::shared_ptr<sPositionComponent> posComp)
 {
     m_components.push_back({ rendrerComp, posComp });
 }
 
-void cRenderSystem::removeComponent(sRenderComponent* rendrerComp, sPositionComponent* posComp)
+void cRenderSystem::removeComponent(std::shared_ptr<sRenderComponent> rendrerComp, std::shared_ptr<sPositionComponent> posComp)
 {
     // TODO
 }

@@ -2,13 +2,15 @@
 #define POSITION_COMPONENT_HPP
 
 struct sPositionComponent {
-    int x, y;
-    enum {
+    int x = 0, y = 0;
+    enum directionEnum{
         UP,
         DOWN,
         LEFT,
         RIGHT
-    } direction;
+    };
+
+    directionEnum direction = directionEnum::DOWN;
 };
 
 #endif // POSITION_COMPONENT_HPP

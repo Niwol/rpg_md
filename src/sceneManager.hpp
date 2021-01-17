@@ -3,10 +3,12 @@
 
 #include <iostream>
 #include <map>
+#include <memory>
 #include <vector>
 
 #include "aiSystem.hpp"
 #include "entity.hpp"
+#include "inputManager.hpp"
 #include "positionComponent.hpp"
 #include "renderComponent.hpp"
 #include "renderSystem.hpp"
@@ -18,6 +20,7 @@ public:
 
     void addEnemy(int x, int y);
 
+    void handleInput(SDL_Event& e);
     void update();
     void render();
 
@@ -30,12 +33,14 @@ private:
     cRenderSystem m_renderSystem;
 
     // Components
-    std::map<unsigned int, sPositionComponent*> m_posComponents;
-    std::map<unsigned int, sRenderComponent*> m_renderComponents;
+    std::map<id_t, std::shared_ptr<sPositionComponent>> m_posComponents;
+    std::map<id_t, std::shared_ptr<sRenderComponent>> m_renderComponents;
 
     // Attributes
     SDL_Window* m_window;
     SDL_Renderer* m_renderer;
+
+    cInputManager m_inputManager;
 };
 
 #endif // SCENE_MANAGER_HPP

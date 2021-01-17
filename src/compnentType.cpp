@@ -1,6 +1,6 @@
 #include "compnentType.hpp"
 
-unsigned int getUnicID(int type, bool entity)
+id_t getUnicID(int type, bool entity)
 {
     static unsigned int nextID[TOTAL_COMPONENTS] = { 0 };
     static unsigned int nextEntityID = 0;
