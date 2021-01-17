@@ -1,0 +1,2 @@
+#ifndef STAT_COMPONENT_HPP
+#define STAT_COMPONENT_HPP

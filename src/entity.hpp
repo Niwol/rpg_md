@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "compnentType.hpp"
+#include "componentType.hpp"
 
 struct sEntity {
     id_t entityID;

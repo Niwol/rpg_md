@@ -48,6 +48,7 @@ int main()
         manager.addEnemy(750, 100);
         manager.addEnemy(900, 500);
         manager.addEnemy(200, 200);
+        manager.addPlayer(100, 100);
 
         while (!quit) {
             // Events
@@ -100,7 +101,7 @@ bool init(SDL_Window** w, SDL_Renderer** r)
     }
 
     *w = SDL_CreateWindow("RPG Test",
-        SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED_DISPLAY(1), SDL_WINDOWPOS_UNDEFINED_DISPLAY(1),
         SCREEN_W, SCREEN_H,
         SDL_WINDOW_SHOWN);
     if (*w == NULL) {
