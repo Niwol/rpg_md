@@ -1,4 +1,4 @@
-#include "compnentType.hpp"
+#include "componentType.hpp"
 
 id_t getUnicID(int type, bool entity)
 {

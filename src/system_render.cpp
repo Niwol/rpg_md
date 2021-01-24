@@ -21,6 +21,9 @@ void cSystem_render::update(float deltaTime)
     SDL_SetRenderDrawColor(m_renderer, 51, 51, 51, 255);
     SDL_RenderClear(m_renderer);
 
+    // Render map
+
+    // Render entitys
     for (long unsigned int i = 0; i < m_components.size(); i++) {
         int x, y;
         SDL_Rect* clip;

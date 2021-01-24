@@ -6,6 +6,7 @@
 enum componentType {
     POSITION_COMPONENT,
     RENDER_COMPONENT,
+    KEY_COMPONENT,
     TOTAL_COMPONENTS
 };
 

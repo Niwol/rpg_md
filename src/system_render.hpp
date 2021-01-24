@@ -25,6 +25,7 @@ private:
     };
 
     std::vector<sComponents> m_components;
+    //map map;
 
     SDL_Window* m_window;
     SDL_Renderer* m_renderer;

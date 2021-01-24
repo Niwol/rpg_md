@@ -3,12 +3,18 @@
 cSceneManager::cSceneManager(SDL_Window* window, SDL_Renderer* renderer)
     : m_system_ai()
     , m_system_render(window, renderer)
+    , m_system_input()
+    , m_system_playerUpdate()
     , m_window(window)
     , m_renderer(renderer)
 {
 }
 
 cSceneManager::~cSceneManager()
+{
+}
+
+void cSceneManager::loadMap()
 {
 }
 
@@ -61,8 +67,9 @@ void cSceneManager::addPlayer(int x, int y)
     // Components
     std::shared_ptr<sComponent_position> newPosComp = std::make_shared<sComponent_position>();
     std::shared_ptr<sComponent_render> newRenderComp = std::make_shared<sComponent_render>();
+    std::shared_ptr<sComponent_key> newKeyComp = std::make_shared<sComponent_key>();
     sEntity newEntity;
-    id_t posCompID, renderCompID;
+    id_t posCompID, renderCompID, keyCompID;
 
     newPosComp->x = x;
     newPosComp->y = y;
@@ -76,27 +83,36 @@ void cSceneManager::addPlayer(int x, int y)
     renderCompID = getUnicID(RENDER_COMPONENT);
     m_components_render.insert(std::pair<id_t, std::shared_ptr<sComponent_render>>(renderCompID, newRenderComp));
 
+    for (int i = 0; i < sComponent_key::TOTAL_KEY; i++)
+        newKeyComp->keyHold[i] = false;
+    keyCompID = getUnicID(KEY_COMPONENT);
+    m_component_key = newKeyComp;
+
     // Systems
     m_system_render.addComponent(newRenderComp, newPosComp);
+    m_system_input.setComponent_key(newKeyComp);
+    m_system_playerUpdate.setComponent(newPosComp, newKeyComp);
 
     // Entity
     newEntity.entityID = getUnicID(0, true);
     newEntity.components.push_back({ POSITION_COMPONENT, posCompID });
     newEntity.components.push_back({ RENDER_COMPONENT, renderCompID });
+    newEntity.components.push_back({ KEY_COMPONENT, keyCompID });
     m_entitys.push_back(newEntity);
 }
 
 void cSceneManager::handleInput(SDL_Event& e)
 {
-    m_inputManager.handleInput(e);
+    m_system_input.handle_input(e);
 }
 
 void cSceneManager::update()
 {
-    m_system_ai.update(0.0);
+    m_system_playerUpdate.update(0.0f);
+    m_system_ai.update(0.0f);
 }
 
 void cSceneManager::render()
 {
-    m_system_render.update(0.0);
+    m_system_render.update(0.0f);
 }

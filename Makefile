@@ -1,4 +1,4 @@
-CC = g++
+CC = clang++
 CFLAGS = -Wall -std=c++11
 LDFLAGS = -lSDL2 -lSDL2_image
 
